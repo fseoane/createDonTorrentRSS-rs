@@ -74,6 +74,7 @@ fn write_config(filename: &str,configdata: &ConfigData){
 }
 
 fn get_last_dontorrent_domain(telegram_url: &str) -> String {
+    // Ref: https://www.scrapingbee.com/blog/web-scraping-rust/
     println!("\nReading:'{}'", telegram_url);
     let response = reqwest::blocking::get(telegram_url)
         .unwrap()
