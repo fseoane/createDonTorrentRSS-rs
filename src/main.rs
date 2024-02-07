@@ -71,7 +71,7 @@ fn write_config(filename: &str,configdata: &ConfigData){
     fs::write(filename, toml_string).expect("Could not write to file!");
 }
 
-fn get_last_don_torrent_domain(telegram_url: &str) -> String {
+fn get_last_dontorrent_domain(telegram_url: &str) -> String {
     println!("Reading:'{}'", telegram_url);
     let response = reqwest::blocking::get(telegram_url)
         .unwrap()
@@ -123,6 +123,8 @@ fn main() {
     let previous_domain = configdata.config.host.clone();
     
     // Print out the values to `stdout`.
+    println!("\nConfiguration:"); 
+    println!("------------------------------------------------------------------------"); 
     println!("host:                       {}", configdata.config.host); 
     println!("url:                        {}", configdata.config.url);
     println!("div_id_ultimos:             {}", configdata.config.div_id_ultimos);
@@ -130,19 +132,19 @@ fn main() {
     println!("link_text_download_torrent: {}", configdata.config.link_text_download_torrent);
     println!("output_file:                {}", configdata.config.output_file);
 
-    let last_domain = get_last_don_torrent_domain("https://t.me/s/DonTorrent");
+    let last_domain = get_last_dontorrent_domain("https://t.me/s/DonTorrent");
     
-    println!("Previous domain:'{}'", previous_domain);
+    println!("\nPrevious domain:'{}'", previous_domain);
     println!("Last domain:'{}'", last_domain);
     
     if previous_domain.ne(&last_domain){
         let newsettings: Settings = Settings{
-            host:last_domain,
-            url:configdata.config.url,
-            div_id_ultimos: configdata.config.div_id_ultimos,
-            link_id_download_torrent:configdata.config.link_id_download_torrent,
-            link_text_download_torrent:configdata.config.link_text_download_torrent,
-            output_file:configdata.config.output_file,
+            host:last_domain.clone(),
+            url:configdata.config.url.clone(),
+            div_id_ultimos: configdata.config.div_id_ultimos.clone(),
+            link_id_download_torrent:configdata.config.link_id_download_torrent.clone(),
+            link_text_download_torrent:configdata.config.link_text_download_torrent.clone(),
+            output_file:configdata.config.output_file.clone(),
         };
 
         let newconfigdata: ConfigData = ConfigData{
@@ -150,5 +152,26 @@ fn main() {
         };
         write_config(filename,&newconfigdata);
     }
+
+    let url_path = configdata.config.url.clone();
+    let div_id_ultimos = format!("{}{}",configdata.config.div_id_ultimos.clone(),">a");
+    let last_torrents_url = format!("{}/{}",last_domain,url_path);
+    
+    println!("\nScraping last forrents from:'{}'", last_torrents_url);
+
+    let torrents = reqwest::blocking::get(last_torrents_url.as_str())
+        .unwrap()
+        .text()
+        .unwrap();
+
+    let document = scraper::Html::parse_document(&torrents);
+
+    let torrent_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
+
+    let torrents = document.select(&torrent_selector).map(|x| x.inner_html());
+
+    torrents
+        .zip(1..101)
+        .for_each(|(item, number)| println!("{}. {}", number, item));
 
 }
