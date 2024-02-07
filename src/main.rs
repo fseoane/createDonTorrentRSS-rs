@@ -80,20 +80,10 @@ fn get_last_don_torrent_domain(telegram_url: &str) -> String {
 
     let document = scraper::Html::parse_document(&response);
     
-    //println!("{:#?}",document);
 
     let selector = scraper::Selector::parse("div.tgme_widget_message_text>a").unwrap();
     let links = document.select(&selector).map(|x| x.inner_html());
-    //println!("{:#?}",links.last());
-    
-    // let link =  match links.last(){
-    //     Some(l) => l,
-    //     _ => String::from(""),
-    // };
-    // match url::Url::parse(link.as_str()){
-    //     Result::Ok(s) => s.as_str(),
-    //     Result::Err(_e ) => "",
-    // }
+
     let link =  match links.last(){
         Some(l) => 
             match url::Url::parse(&l.as_str()){
@@ -106,7 +96,6 @@ fn get_last_don_torrent_domain(telegram_url: &str) -> String {
     let url = link.clone();
 
     return url;
-    //println!("{}",link);
 
 }
 
@@ -132,6 +121,7 @@ fn main() {
     let configdata: ConfigData = read_config(filename);
 
     let previous_domain = configdata.config.host.clone();
+    
     // Print out the values to `stdout`.
     println!("host:                       {}", configdata.config.host); 
     println!("url:                        {}", configdata.config.url);
