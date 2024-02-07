@@ -34,7 +34,7 @@ fn read_config(filename: &str) -> ConfigData{
         // Handle the `error` case.
         Err(_) => {
             // Write `msg` to `stderr`.
-            eprintln!("[!] Could not read config file `{}`", filename);
+            eprintln!("\n[!] Could not read config file `{}`", filename);
             // Exit the program with exit code `1`.
             exit(1);
         }
@@ -67,19 +67,20 @@ fn read_config(filename: &str) -> ConfigData{
 }
 
 fn write_config(filename: &str,configdata: &ConfigData){
-    let toml_string = toml::to_string(configdata).expect("Could not encode TOML value").replace("\"", "");
-    fs::write(filename, toml_string).expect("Could not write to file!");
+    let toml_string = toml::to_string(configdata).expect("\n[!] Could not encode TOML value")
+        .replace("\"", "")
+        .replace(" ", "");
+    fs::write(filename, toml_string).expect("\n[!] Could not write to file!");
 }
 
 fn get_last_dontorrent_domain(telegram_url: &str) -> String {
-    println!("Reading:'{}'", telegram_url);
+    println!("\nReading:'{}'", telegram_url);
     let response = reqwest::blocking::get(telegram_url)
         .unwrap()
         .text()
         .unwrap();
 
     let document = scraper::Html::parse_document(&response);
-    
 
     let selector = scraper::Selector::parse("div.tgme_widget_message_text>a").unwrap();
     let links = document.select(&selector).map(|x| x.inner_html());
@@ -154,19 +155,27 @@ fn main() {
     }
 
     let url_path = configdata.config.url.clone();
-    let div_id_ultimos = format!("{}{}",configdata.config.div_id_ultimos.clone(),">a");
-    let last_torrents_url = format!("{}/{}",last_domain,url_path);
+    let div_id_ultimos = format!("{}{}{}","div.",configdata.config.div_id_ultimos.clone().trim(),">a");
+    let last_torrents_url = format!("{}/{}",last_domain,url_path)
+        .replace("//", "/")
+        .replace(":/", "://");
     
-    println!("\nScraping last forrents from:'{}'", last_torrents_url);
+    println!("\nScraping last torrents from:'{}'", last_torrents_url);
 
     let torrents = reqwest::blocking::get(last_torrents_url.as_str())
         .unwrap()
         .text()
         .unwrap();
 
+    println!("\nread:'{:#?}'", &torrents);
+
     let document = scraper::Html::parse_document(&torrents);
+   
+    println!("\nparsed:'{:#?}'", &document);
 
     let torrent_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
+
+    println!("\nSelector:'{:#?}'", torrent_selector);
 
     let torrents = document.select(&torrent_selector).map(|x| x.inner_html());
 
