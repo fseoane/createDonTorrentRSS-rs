@@ -100,6 +100,16 @@ fn get_last_don_torrent_domain(telegram_url: &str) -> String {
 }
 
 fn main() {
+    // IMPORTANT:
+    // ==========
+    // To compile in Alpine Linux in arm64, install these packages in the Alpine:
+    //         sudo apk add pkgconfig
+    //         sudo apk add gcc musl-dev openssl-dev
+    // and add to Cargo.toml the following dependency:
+    //         git2 = {version="0.13.22", features = ["vendored-libgit2"]}
+
+
+
     let args: Vec<String> = env::args().collect();
 
     let mut option: &str = "";
