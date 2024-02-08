@@ -106,10 +106,11 @@ fn main() {
     // ==========
     // To compile in Alpine Linux in arm64, install these packages in the Alpine:
     //         sudo apk add pkgconfig
-    //         sudo apk add gcc musl-dev openssl-dev
+    //         sudo apk add gcc musl-dev openssl openssl-dev
     // and add to Cargo.toml the following dependency:
     //         git2 = {version="0.13.22", features = ["vendored-libgit2"]}
-
+    // and compile passing the -Ctarget-features=-crt-static argument like:
+    //         RUSTFLAGS="-Ctarget-feature=-crt-static" cargo build
 
 
     let args: Vec<String> = env::args().collect();
