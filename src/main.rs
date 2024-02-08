@@ -167,33 +167,33 @@ fn main() {
         write_config(filename,&newconfigdata);
     }
 
-    let url_path = configdata.config.url.clone();
-    let div_id_ultimos = format!("{}{}{}","div.",configdata.config.div_id_ultimos.clone().trim(),">a");
-    let last_torrents_url = format!("{}/{}",last_domain,url_path)
-        .replace("//", "/")
-        .replace(":/", "://");
+    // let url_path = configdata.config.url.clone();
+    // let div_id_ultimos = format!("{}{}{}","div.",configdata.config.div_id_ultimos.clone().trim(),">a");
+    // let last_torrents_url = format!("{}/{}",last_domain,url_path)
+    //     .replace("//", "/")
+    //     .replace(":/", "://");
     
-    println!("\nScraping last torrents from:'{}'", last_torrents_url);
+    // println!("\nScraping last torrents from:'{}'", last_torrents_url);
 
-    let torrents = reqwest::blocking::get(last_torrents_url.as_str())
-        .unwrap()
-        .text()
-        .unwrap();
+    // let torrents = reqwest::blocking::get(last_torrents_url.as_str())
+    //     .unwrap()
+    //     .text()
+    //     .unwrap();
 
-    println!("\nread:'{:#?}'", &torrents);
+    // println!("\nread:'{:#?}'", &torrents);
 
-    let document = scraper::Html::parse_document(&torrents);
+    // let document = scraper::Html::parse_document(&torrents);
    
-    println!("\nparsed:'{:#?}'", &document);
+    // println!("\nparsed:'{:#?}'", &document);
 
-    let torrent_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
+    // let torrent_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
 
-    println!("\nSelector:'{:#?}'", torrent_selector);
+    // println!("\nSelector:'{:#?}'", torrent_selector);
 
-    let torrents = document.select(&torrent_selector).map(|x| x.inner_html());
+    // let torrents = document.select(&torrent_selector).map(|x| x.inner_html());
 
-    torrents
-        .zip(1..101)
-        .for_each(|(item, number)| println!("{}. {}", number, item));
+    // torrents
+    //     .zip(1..101)
+    //     .for_each(|(item, number)| println!("{}. {}", number, item));
 
 }
