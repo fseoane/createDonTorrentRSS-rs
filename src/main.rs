@@ -104,12 +104,13 @@ fn get_last_dontorrent_domain(telegram_url: &str) -> String {
 fn main() {
     // IMPORTANT:
     // ==========
-    // To compile in Alpine Linux in arm64, install these packages in the Alpine:
+    // To be able to compile in Alpine Linux in arm64, 
+    // 1.) install these packages in the Alpine:
     //         sudo apk add pkgconfig
     //         sudo apk add gcc musl-dev openssl openssl-dev
-    // and add to Cargo.toml the following dependency:
+    // 2.) and add to Cargo.toml the following dependency:
     //         git2 = {version="0.13.22", features = ["vendored-libgit2"]}
-    // and compile passing the -Ctarget-features=-crt-static argument like:
+    // 3.) and compile passing the -Ctarget-features=-crt-static argument like:
     //         RUSTFLAGS="-Ctarget-feature=-crt-static" cargo build
 
 
