@@ -112,6 +112,10 @@ fn main() {
     //         git2 = {version="0.13.22", features = ["vendored-libgit2"]}
     // 3.) and compile passing the -Ctarget-features=-crt-static argument like:
     //         RUSTFLAGS="-Ctarget-feature=-crt-static" cargo build
+    // because rust only links to static libraries when building a static binary, 
+    // which is the default for the musl target
+    // but to build a dynamic binary which can link to dynamic libraries, 
+    // you need to use RUSTFLAGS="-Ctarget-feature=-crt-static".
 
 
     let args: Vec<String> = env::args().collect();
