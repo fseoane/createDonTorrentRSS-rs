@@ -256,13 +256,8 @@ fn get_clean_name(title: &String) -> String {
         }
     };
     cleaned_title = cleaned_title.replace("[]", "");
-    cleaned_title = cleaned_title.replace("  ", " ");
-    cleaned_title = cleaned_title.replace("  ", " ");
-    cleaned_title  = make_ascii_titlecase(&mut cleaned_title);
-    
-    
-    
-    
+    cleaned_title = cleaned_title.replace("  ", " ").replace("  ", " ");
+    //cleaned_title  = make_ascii_titlecase(&mut cleaned_title);
     
     return String::from(cleaned_title);
     
