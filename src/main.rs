@@ -190,6 +190,36 @@ fn get_cathegory(href_path: &String) -> String {
     };
 }
 
+fn get_season(title: &String) -> String {
+    let re = regex::Regex::new(r"(?ix)
+                                            (?:\s|s|season)
+                                            (\d+)
+                                            (?:e|x|episode|\n)
+                                            (\d{2})             
+                                            ").unwrap();
+    if let Some(captures) = re.captures(title) {
+        return String::from(captures.get(1).unwrap().as_str());
+    } else {
+        return String::from("");
+    }
+}
+
+fn get_episode(title: &String) -> String {
+    let re = regex::Regex::new(r"(?ix)                 
+                            (?:                 
+                            e|x|cap-|episode    
+                            )                    
+                            \s*                 
+                            (\d{2})             
+                            ").unwrap();
+    if let Some(captures) = re.captures(title) {
+        return String::from(captures.get(1).unwrap().as_str());
+    } else {
+        return String::from("");
+    }
+}
+
+
 fn main() {
     // IMPORTANT:
     // ==========
@@ -290,15 +320,20 @@ fn main() {
     // let cathegory: String;
 
     torrents
-        .zip(1..101)
+        .zip(1..121)
         .for_each(|(item, number)|{
             println!("{}. {}", number, item);
 
             let href_path = get_href_path(&item);
             let title =  get_title(&item);
             let cathegory = get_cathegory(&href_path);
-            println!("    href link:´{}´\n    cathegory:´{}´\n        title:´{}´\n", format!("{}{}",&last_domain,&href_path), &cathegory, &title);
+            let season = get_season(&title);
+            let episode = get_episode(&title);
+            println!("    href link:´{}´", format!("{}{}",&last_domain,&href_path));
+            println!("    cathegory:´{}´", &cathegory);
+            println!("        title:´{}´", &title);
+            println!("       season:´{}´", &season);
+            println!("      episode:´{}´", &episode);
+            println!("\n");
         });
-            
-
 }
