@@ -60,7 +60,6 @@ fn read_config(filename: &str) -> ConfigData{
             eprintln!("\n[!] Unable to load config data from `{}` \nError:[{}]", filename,e.message());
             println!("\n{}",&replaced.as_str());
             // Exit the program with exit code `1`.
-
             std::process::exit(1);
         }
     };
@@ -220,12 +219,20 @@ fn get_episode(title: &String) -> String {
     }
 }
 
-fn make_ascii_titlecase(s: &mut String) -> String {
+fn make_ascii_titlecase(s: &str) -> String {
     
-    if let Some(r) = s.get_mut(0..1) {
-        r.make_ascii_uppercase();
-    }
-    return s.to_string();
+    let letra_inical = s.get(0..1).unwrap();
+    let resto_palabra = s.get(1..).unwrap();
+    return format!("{}{}",String::from(letra_inical.to_uppercase()),String::from(resto_palabra));
+}
+
+fn capitalize (cadena: &String) -> String {
+    let mut cap_result: String = String::from("");
+    for byte in cadena.split_whitespace() {
+        cap_result=format!("{} {}",&cap_result,make_ascii_titlecase(byte));
+    };
+    //return String::from(cap_result.as_str());
+    cap_result
 }
 
 fn get_clean_name(title: &String) -> String {
@@ -264,6 +271,8 @@ fn get_clean_name(title: &String) -> String {
 }
 
 
+
+
 fn main() {
     // IMPORTANT:
     // ==========
@@ -279,7 +288,10 @@ fn main() {
     // which is the default for the musl target
     // but to build a dynamic binary which can link to dynamic libraries, 
     // you need to use RUSTFLAGS="-Ctarget-feature=-crt-static".
-
+    let cadena: String = String::from("El ultimo mohicano");
+    let cap_cadena: String = capitalizar(&cadena);
+    println!("{}",cap_cadena);
+    std::process::exit(1);
 
     let args: Vec<String> = env::args().collect();
 
