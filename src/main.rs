@@ -226,13 +226,12 @@ fn make_ascii_titlecase(s: &str) -> String {
     return format!("{}{}",String::from(letra_inical.to_uppercase()),String::from(resto_palabra));
 }
 
-fn capitalize (cadena: &String) -> String {
+fn capitalize_each_word (cadena: &String) -> String {
     let mut cap_result: String = String::from("");
     for byte in cadena.split_whitespace() {
         cap_result=format!("{} {}",&cap_result,make_ascii_titlecase(byte));
     };
-    //return String::from(cap_result.as_str());
-    cap_result
+    return cap_result;
 }
 
 fn get_clean_name(title: &String) -> String {
@@ -255,11 +254,11 @@ fn get_clean_name(title: &String) -> String {
     cleaned_title = String::from(re.replace_all(cleaned_title.as_str(), ""));
 
     // # remove forbidden words from file name
-    let mut cleaned_title: String=title.clone();
+    let mut cleaned_title: String=title.clone().to_lowercase();
     //cleaned_title = cleaned_title.replace(" ", ".");
     for removable_word in words_to_remove{
         if cleaned_title.find(removable_word).is_some() {  
-            cleaned_title = cleaned_title.replace(removable_word, "");
+            cleaned_title = cleaned_title.replace(&removable_word.to_lowercase(), "");
         }
     };
     cleaned_title = cleaned_title.replace("[]", "");
@@ -288,10 +287,6 @@ fn main() {
     // which is the default for the musl target
     // but to build a dynamic binary which can link to dynamic libraries, 
     // you need to use RUSTFLAGS="-Ctarget-feature=-crt-static".
-    let cadena: String = String::from("El ultimo mohicano");
-    let cap_cadena: String = capitalizar(&cadena);
-    println!("{}",cap_cadena);
-    std::process::exit(1);
 
     let args: Vec<String> = env::args().collect();
 
