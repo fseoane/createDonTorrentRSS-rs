@@ -7,8 +7,6 @@ use url::Url;
 use toml;
 use std::env;
 use regex;
-extern crate inflector;
-use inflector::Inflector;
 
 #[derive(Serialize,Deserialize, Debug)]
 struct ConfigData {
@@ -222,8 +220,16 @@ fn get_episode(title: &String) -> String {
     }
 }
 
+fn make_ascii_titlecase(s: &mut String) -> String {
+    
+    if let Some(r) = s.get_mut(0..1) {
+        r.make_ascii_uppercase();
+    }
+    return s.to_string();
+}
+
 fn get_clean_name(title: &String) -> String {
-    let words_to_remove=[
+    let words_to_remove: [&str; 11]=[
         "- 1ª Temporada",
         "- 2ª Temporada",
         "- 3ª Temporada",
@@ -233,19 +239,32 @@ fn get_clean_name(title: &String) -> String {
         "- 7ª Temporada",
         "- 8ª Temporada",
         "- 9ª Temporada",
-        "[720p]"
+        "720p",
+        ":"
     ];
+    let mut cleaned_title: String=title.clone();
+    //let re = regex::Regex::new(r"(\(.*?\)|{.*?}|<.*?>|\[.*?\])").unwrap();
+    let re = regex::Regex::new(r"(<.*?>|\[.*?\])").unwrap();
+    cleaned_title = String::from(re.replace_all(cleaned_title.as_str(), ""));
 
     // # remove forbidden words from file name
-    let lower_title_text = title.to_lowercase();
-    let mut cleaned_title: String;
+    let mut cleaned_title: String=title.clone();
+    //cleaned_title = cleaned_title.replace(" ", ".");
     for removable_word in words_to_remove{
-        if lower_title_text.find(removable_word).is_some() {  
+        if cleaned_title.find(removable_word).is_some() {  
             cleaned_title = cleaned_title.replace(removable_word, "");
         }
     };
-
-    return &cleaned_title.Inflector::to_title_case();
+    cleaned_title = cleaned_title.replace("[]", "");
+    cleaned_title = cleaned_title.replace("  ", " ");
+    cleaned_title = cleaned_title.replace("  ", " ");
+    cleaned_title  = make_ascii_titlecase(&mut cleaned_title);
+    
+    
+    
+    
+    
+    return String::from(cleaned_title);
     
 }
 
@@ -356,14 +375,16 @@ fn main() {
 
             let href_path = get_href_path(&item);
             let title =  get_title(&item);
+            let cleaned_title =  get_clean_name(&title);
             let cathegory = get_cathegory(&href_path);
             let season = get_season(&title);
             let episode = get_episode(&title);
-            println!("    href link:´{}´", format!("{}{}",&last_domain,&href_path));
-            println!("    cathegory:´{}´", &cathegory);
-            println!("        title:´{}´", &title);
-            println!("       season:´{}´", &season);
-            println!("      episode:´{}´", &episode);
+            println!("       href link:´{}´", format!("{}{}",&last_domain,&href_path));
+            println!("       cathegory:´{}´", &cathegory);
+            println!("           title:´{}´", &title);
+            println!("   cleaned title:´{}´", &cleaned_title);
+            println!("          season:´{}´", &season);
+            println!("         episode:´{}´", &episode);
             println!("\n");
         });
 }
