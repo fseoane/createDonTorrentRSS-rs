@@ -184,7 +184,7 @@ fn main() {
         .text()
         .unwrap();
 
-    println!("\nread:'{:#?}'", &torrents);
+    //println!("\nread:'{:#?}'", &torrents);
 
     let document = scraper::Html::parse_document(&torrents);
    
