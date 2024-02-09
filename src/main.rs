@@ -285,9 +285,9 @@ fn main() {
     //let torrents = document.select(&torrent_selector).map(|item_text: scraper::ElementRef| item_text.html());
     let torrents = document.select(&torrent_selector).map(|item_text: scraper::ElementRef| item_text.html());
 
-    let href_path: String;
-    let title: String;
-    let cathegory: String;
+    // let href_path: String;
+    // let title: String;
+    // let cathegory: String;
 
     torrents
         .zip(1..101)
@@ -297,7 +297,7 @@ fn main() {
             let href_path = get_href_path(&item);
             let title =  get_title(&item);
             let cathegory = get_cathegory(&href_path);
-            println!("    href link:´{}´\n    cathegory:´{}´\n        title:´{}´\n", href_path, cathegory, title);
+            println!("    href link:´{}´\n    cathegory:´{}´\n        title:´{}´\n", format!("{}{}",last_domain,href_path), cathegory, title);
         });
             
 
