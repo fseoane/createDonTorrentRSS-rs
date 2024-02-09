@@ -297,7 +297,7 @@ fn main() {
             let href_path = get_href_path(&item);
             let title =  get_title(&item);
             let cathegory = get_cathegory(&href_path);
-            println!("    href link:´{}´\n    cathegory:´{}´\n        title:´{}´\n", format!("{}{}",last_domain,href_path), cathegory, title);
+            println!("    href link:´{}´\n    cathegory:´{}´\n        title:´{}´\n", format!("{}{}",&last_domain,&href_path), &cathegory, &title);
         });
             
 
