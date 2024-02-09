@@ -101,6 +101,95 @@ fn get_last_dontorrent_domain(telegram_url: &str) -> String {
 
 }
 
+
+fn get_href_path(html_a_element: &String) -> String {
+    //<a class="text-primary" href="documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix">Fórmula 1: La emoción de un Grand Prix: 2x09 &amp; 2x10</a>
+    let start_delimiter="href=\"";
+    let end_delimiter="\"";
+    let start_crop_position: usize;
+    let end_crop_position: usize;
+        
+    if html_a_element.find(start_delimiter).is_some() {  
+        start_crop_position = html_a_element.find(&start_delimiter).unwrap() + start_delimiter.len();
+    } else{
+        start_crop_position = 0;
+    };
+
+    let rest_of_html_a_element = String::from(&html_a_element.clone()[start_crop_position..]);
+
+    if rest_of_html_a_element.find(end_delimiter).is_some() {  
+        end_crop_position = rest_of_html_a_element.find(&end_delimiter).unwrap();
+    }else{
+        end_crop_position = 0;
+    };
+
+    if start_crop_position>=1 && end_crop_position>=1 && start_crop_position<end_crop_position{
+        return String::from(&rest_of_html_a_element[..end_crop_position]);
+    }else{
+        return String::from("");
+    };
+}
+
+fn get_title(html_a_element: &String) -> String {
+    //<a class="text-primary" href="documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix">Fórmula 1: La emoción de un Grand Prix: 2x09 &amp; 2x10</a>
+    let start_delimiter="\">";
+    let end_delimiter="</a>";
+    let start_crop_position: usize;
+    let end_crop_position: usize;
+    
+    if html_a_element.find(start_delimiter).is_some() {  
+        start_crop_position = html_a_element.find(&start_delimiter).unwrap() + start_delimiter.len();
+        
+    } else{
+        start_crop_position = 0;
+    };
+
+    if html_a_element.find(end_delimiter).is_some() {  
+        end_crop_position = html_a_element.find(&end_delimiter).unwrap();
+    }else{
+        end_crop_position = 0;
+    };
+    
+    if start_crop_position>=1 && end_crop_position>=1 && start_crop_position<end_crop_position{
+        return String::from(&html_a_element[start_crop_position..end_crop_position]);
+    }else{
+        return String::from("");
+    };
+}
+
+fn get_cathegory(href_path: &String) -> String {
+    //<a class="text-primary" href="documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix">Fórmula 1: La emoción de un Grand Prix: 2x09 &amp; 2x10</a>
+    let start_delimiter="/";
+    let end_delimiter="/";
+    let start_crop_position: usize;
+    let end_crop_position: usize;
+    let cathegory: String;
+
+    if href_path.starts_with(start_delimiter){
+        cathegory = String::from(&href_path.clone()[1..]);
+        start_crop_position = 0;
+    } else {
+        cathegory = String::from(&href_path.clone());
+        if cathegory.find(start_delimiter).is_some() {  
+            start_crop_position = cathegory.find(&start_delimiter).unwrap() + start_delimiter.len();
+        } else{
+            start_crop_position = 0;
+        };
+    }
+
+    if cathegory.find(end_delimiter).is_some() {  
+        end_crop_position = cathegory.find(&end_delimiter).unwrap();
+    }else{
+        end_crop_position = 0;
+    };
+
+    if end_crop_position>=1 && start_crop_position<end_crop_position{
+        return String::from(&cathegory[start_crop_position..end_crop_position]);
+    }else{
+        return String::from("");
+    };
+}
+
 fn main() {
     // IMPORTANT:
     // ==========
@@ -172,7 +261,6 @@ fn main() {
     };
 
     let url_path = configdata.config.url.clone();
-    let div_id_ultimos = format!("{}{}{}","div.",configdata.config.div_id_ultimos.clone().trim(),">a");
     let last_torrents_url = format!("{}/{}",last_domain,url_path)
         .replace("//", "/")
         .replace(":/", "://");
@@ -188,16 +276,29 @@ fn main() {
 
     let document = scraper::Html::parse_document(&torrents);
    
-    println!("\nparsed:'{:#?}'", &document);
+    //println!("\nparsed:'{:#?}'", &document);
 
+    let div_id_ultimos = format!("{}","a.text-primary");
+    //let div_id_ultimos = format!("{}{}{}","div.",configdata.config.div_id_ultimos.clone().trim(),">div.card>div.card-body>div>a.text-primary");
     let torrent_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
 
-    println!("\nSelector:'{:#?}'", torrent_selector);
+    //let torrents = document.select(&torrent_selector).map(|item_text: scraper::ElementRef| item_text.html());
+    let torrents = document.select(&torrent_selector).map(|item_text: scraper::ElementRef| item_text.html());
 
-    let torrents = document.select(&torrent_selector).map(|x| x.inner_html());
+    let href_path: String;
+    let title: String;
+    let cathegory: String;
 
     torrents
         .zip(1..101)
-        .for_each(|(item, number)| println!("{}. {}", number, item));
+        .for_each(|(item, number)|{
+            println!("{}. {}", number, item);
+
+            let href_path = get_href_path(&item);
+            let title =  get_title(&item);
+            let cathegory = get_cathegory(&href_path);
+            println!("    href link:´{}´\n    cathegory:´{}´\n        title:´{}´\n", href_path, cathegory, title);
+        });
+            
 
 }
