@@ -6,6 +6,9 @@ use scraper;
 use url::Url;
 use toml;
 use std::env;
+use regex;
+extern crate inflector;
+use inflector::Inflector;
 
 #[derive(Serialize,Deserialize, Debug)]
 struct ConfigData {
@@ -217,6 +220,33 @@ fn get_episode(title: &String) -> String {
     } else {
         return String::from("");
     }
+}
+
+fn get_clean_name(title: &String) -> String {
+    let words_to_remove=[
+        "- 1ª Temporada",
+        "- 2ª Temporada",
+        "- 3ª Temporada",
+        "- 4ª Temporada",
+        "- 5ª Temporada",
+        "- 6ª Temporada",
+        "- 7ª Temporada",
+        "- 8ª Temporada",
+        "- 9ª Temporada",
+        "[720p]"
+    ];
+
+    // # remove forbidden words from file name
+    let lower_title_text = title.to_lowercase();
+    let mut cleaned_title: String;
+    for removable_word in words_to_remove{
+        if lower_title_text.find(removable_word).is_some() {  
+            cleaned_title = cleaned_title.replace(removable_word, "");
+        }
+    };
+
+    return &cleaned_title.Inflector::to_title_case();
+    
 }
 
 
