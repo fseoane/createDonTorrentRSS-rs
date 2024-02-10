@@ -219,6 +219,26 @@ fn get_episode(title: &String) -> String {
     }
 }
 
+fn get_quality(title: &String) -> String {
+    if title.find("[480p]").is_some() {
+        return String::from("480p");
+    } else if title.find("[720p]").is_some(){
+        return String::from("720p");
+    } else if title.find("[1080p]").is_some(){
+        return String::from("1080p");
+    } else if title.find("[1440p]").is_some(){
+        return String::from("1440p");
+    } else if title.find("[2K]").is_some(){
+        return String::from("1080p");
+    } else if title.find("[4K]").is_some(){
+        return String::from("2160p");
+    } else if title.find("[8K]").is_some(){
+        return String::from("4320p");
+    } else {
+    return String::from("");
+    }
+}
+
 fn make_ascii_titlecase(s: &str) -> String {
     
     let letra_inical = s.get(0..1).unwrap_or("");
@@ -394,6 +414,7 @@ fn main() {
 
             let href_path = get_href_path(&item);
             let title =  get_title(&item);
+            let quality = get_quality(&title);
             let cleaned_title =  get_clean_name(&title);
             let cathegory = get_cathegory(&href_path);
             let season = get_season(&title);
@@ -409,6 +430,7 @@ fn main() {
             println!("       cathegory:´{}´", &cathegory);
             println!("           title:´{}´", &title);
             println!("   cleaned title:´{}´", &cleaned_title);
+            println!("         quality:´{}´", &quality);
             println!("          season:´{}´", &season);
             println!("         episode:´{}´", &episode);
             println!("\n");
