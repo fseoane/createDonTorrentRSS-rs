@@ -221,21 +221,22 @@ fn get_episode(title: &String) -> String {
 
 fn make_ascii_titlecase(s: &str) -> String {
     
-    let letra_inical = s.get(0..1).unwrap();
-    let resto_palabra = s.get(1..).unwrap();
+    let letra_inical = s.get(0..1).unwrap_or("");
+    let resto_palabra = s.get(1..).unwrap_or("");
     return format!("{}{}",String::from(letra_inical.to_uppercase()),String::from(resto_palabra));
 }
 
 fn capitalize_each_word (cadena: &String) -> String {
     let mut cap_result: String = String::from("");
+
     for byte in cadena.split_whitespace() {
-        cap_result=format!("{} {}",&cap_result,make_ascii_titlecase(byte));
+        cap_result=format!("{} {}",&cap_result.trim(),make_ascii_titlecase(byte));
     };
     return cap_result;
 }
 
 fn get_clean_name(title: &String) -> String {
-    let words_to_remove: [&str; 11]=[
+    let words_to_remove: [&str; 13]=[
         "- 1ª Temporada",
         "- 2ª Temporada",
         "- 3ª Temporada",
@@ -246,30 +247,46 @@ fn get_clean_name(title: &String) -> String {
         "- 8ª Temporada",
         "- 9ª Temporada",
         "720p",
+        "&amp;",
+        "HD",
         ":"
     ];
-    let mut cleaned_title: String=title.clone();
-    //let re = regex::Regex::new(r"(\(.*?\)|{.*?}|<.*?>|\[.*?\])").unwrap();
-    let re = regex::Regex::new(r"(<.*?>|\[.*?\])").unwrap();
-    cleaned_title = String::from(re.replace_all(cleaned_title.as_str(), ""));
-
-    // # remove forbidden words from file name
     let mut cleaned_title: String=title.clone().to_lowercase();
-    //cleaned_title = cleaned_title.replace(" ", ".");
+
+    // Clean words between [ and ] or , and >
+    let re_words_in_brackets = regex::Regex::new(r"(<.*?>|\[.*?\])").unwrap();
+    if let Some(to_delete_in_brackets) = re_words_in_brackets.captures(&cleaned_title){
+        cleaned_title = String::from(cleaned_title.replace(to_delete_in_brackets.get(0).unwrap().as_str().trim(), ""));
+    }
+
+    // Clean season and episode
+    // .-first single season and episode
+    let re_season_and_episode = regex::Regex::new(r"(?ix)(?:\s|s|season)(\d+)(?:e|x|episode|\n)(\d{2})").unwrap();
+    if let Some(to_delete_season_episode) = re_season_and_episode.captures(&cleaned_title){
+        cleaned_title = String::from(cleaned_title.replace(to_delete_season_episode.get(0).unwrap().as_str().trim(), ""));
+    }
+    // .-second when there is a range from episodes like "SxEE al SxEE"
+    let re_season_and_episode = regex::Regex::new(r"(?:\sal)(?ix)(?:\s|s|season)(\d+)(?:e|x|episode|\n)(\d{2})").unwrap();
+    if let Some(to_delete_season_episode) = re_season_and_episode.captures(&cleaned_title){
+        cleaned_title = String::from(cleaned_title.replace(to_delete_season_episode.get(0).unwrap().as_str().trim(), ""));
+    }
+
+    // Clean removable words
     for removable_word in words_to_remove{
-        if cleaned_title.find(removable_word).is_some() {  
+        if cleaned_title.find(&removable_word.to_lowercase()).is_some() {  
             cleaned_title = cleaned_title.replace(&removable_word.to_lowercase(), "");
         }
     };
-    cleaned_title = cleaned_title.replace("[]", "");
-    cleaned_title = cleaned_title.replace("  ", " ").replace("  ", " ");
-    //cleaned_title  = make_ascii_titlecase(&mut cleaned_title);
     
+    // Clean empty brackets
+    cleaned_title = cleaned_title.replace("[]", "");
+
+    // Clean double spaces
+    cleaned_title = cleaned_title.replace("  ", " ").replace("  ", " ");
+
     return String::from(capitalize_each_word(&cleaned_title));
     
 }
-
-
 
 
 fn main() {
@@ -380,7 +397,14 @@ fn main() {
             let cleaned_title =  get_clean_name(&title);
             let cathegory = get_cathegory(&href_path);
             let season = get_season(&title);
-            let episode = get_episode(&title);
+            let episode: String ;
+            if season.len()>0{
+                episode = get_episode(&title);
+            } else {
+                episode = String::from("");
+            }
+
+
             println!("       href link:´{}´", format!("{}{}",&last_domain,&href_path));
             println!("       cathegory:´{}´", &cathegory);
             println!("           title:´{}´", &title);
