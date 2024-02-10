@@ -1,12 +1,18 @@
-use reqwest::blocking::get;
+use reqwest;
 use serde_derive::{Serialize,Deserialize};
 use std::fs;
+use std::io::Write;
 use std::process::exit;
 use scraper;
-use url::Url;
+use url;
 use toml;
 use std::env;
 use regex;
+use rss::{CategoryBuilder,ItemBuilder,ChannelBuilder,EnclosureBuilder};
+use chrono::prelude::*;
+use std::fs::File;
+use std::io::prelude::*;
+
 
 #[derive(Serialize,Deserialize, Debug)]
 struct ConfigData {
@@ -70,7 +76,7 @@ fn write_config(filename: &str,configdata: &ConfigData){
     let toml_string = toml::to_string(configdata).expect("\n[!] Could not encode TOML value")
         .replace("\"", "")
         .replace(" ", "");
-    fs::write(filename, toml_string).expect("\n[!] Could not write to file!");
+    fs::write(filename, toml_string).expect("\n[!] Could not write config to file!");
 }
 
 fn get_last_dontorrent_domain(telegram_url: &str) -> String {
@@ -101,6 +107,33 @@ fn get_last_dontorrent_domain(telegram_url: &str) -> String {
 
 }
 
+fn get_substring_between(original_string: &String,start_crop_delimiter: &str, end_crop_delimiter: &str) -> String {
+    //<a class="text-primary" href="documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix">Fórmula 1: La emoción de un Grand Prix: 2x09 &amp; 2x10</a>
+    // let start_crop_delimiter="href=\"";
+    // let end_crop_delimiter="\"";
+    let start_crop_position: usize;
+    let end_crop_position: usize;
+        
+    if original_string.find(start_crop_delimiter).is_some() {  
+        start_crop_position = original_string.find(start_crop_delimiter).unwrap() + start_crop_delimiter.len();
+    } else{
+        start_crop_position = 0;
+    };
+
+    let rest_of_original_string = String::from(&original_string.clone()[start_crop_position..]);
+
+    if rest_of_original_string.find(end_crop_delimiter).is_some() {  
+        end_crop_position = rest_of_original_string.find(end_crop_delimiter).unwrap();
+    }else{
+        end_crop_position = 0;
+    };
+
+    if end_crop_position>=1{
+        return String::from(&rest_of_original_string[..end_crop_position]);
+    }else{
+        return String::from("");
+    };
+}
 
 fn get_href_path(html_a_element: &String) -> String {
     //<a class="text-primary" href="documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix">Fórmula 1: La emoción de un Grand Prix: 2x09 &amp; 2x10</a>
@@ -120,7 +153,7 @@ fn get_href_path(html_a_element: &String) -> String {
     if rest_of_html_a_element.find(end_delimiter).is_some() {  
         end_crop_position = rest_of_html_a_element.find(&end_delimiter).unwrap();
     }else{
-        end_crop_position = 0;
+        end_crop_position = rest_of_html_a_element.len()+1;
     };
 
     if end_crop_position>=1{
@@ -201,21 +234,19 @@ fn get_cathegory(href_path: &String) -> String {
         start_crop_position = 0;
     } else {
         cathegory = String::from(&href_path.clone());
-        if cathegory.find(start_delimiter).is_some() {  
-            start_crop_position = cathegory.find(&start_delimiter).unwrap() + start_delimiter.len();
-        } else{
-            start_crop_position = 0;
-        };
+        start_crop_position = 0;
     }
 
-    if cathegory.find(end_delimiter).is_some() {  
-        end_crop_position = cathegory.find(&end_delimiter).unwrap();
+    let rest_of_cathegory = String::from(&cathegory.clone()[start_crop_position..]);
+
+    if rest_of_cathegory.find(end_delimiter).is_some() {  
+        end_crop_position = rest_of_cathegory.find(&end_delimiter).unwrap();
     }else{
-        end_crop_position = 0;
+        end_crop_position = rest_of_cathegory.len()+1;
     };
 
-    if end_crop_position>=1 && start_crop_position<end_crop_position{
-        return String::from(&cathegory[start_crop_position..end_crop_position]);
+    if end_crop_position>=1{
+        return String::from(&rest_of_cathegory[..end_crop_position]);
     }else{
         return String::from("");
     };
@@ -277,13 +308,13 @@ fn make_ascii_titlecase(s: &str) -> String {
     return format!("{}{}",String::from(letra_inical.to_uppercase()),String::from(resto_palabra));
 }
 
-fn capitalize_each_word (cadena: &String) -> String {
+fn capitalize_each_word (a_string: &String) -> String {
     let mut cap_result: String = String::from("");
 
-    for byte in cadena.split_whitespace() {
-        cap_result=format!("{} {}",&cap_result.trim(),make_ascii_titlecase(byte));
+    for a_word in a_string.split_whitespace() {
+        cap_result=format!("{} {}",&cap_result.trim(),make_ascii_titlecase(a_word));
     };
-    return cap_result;
+    return String::from(cap_result.trim());
 }
 
 fn get_clean_name(title: &String) -> String {
@@ -437,7 +468,25 @@ fn main() {
     let links_page_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
 
     let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
+    
+    // Create a new file for writing
+    //let rss_file = std::fs::File::create(&configdata.config.output_file)?;
+    let mut rss_file = std::fs::File::create("output.xml").expect("rss file could not be created");
+    // Create a buffered writer to write to the file
+    //let mut rss_writer = std::io::BufWriter::new(rss_file);
 
+    // Write some data to the file
+    let now_date_time: DateTime<Local> = Local::now();
+    println!("{}",now_date_time);
+    rss_file.write(b"<rss version=\"2.0\">\n").expect("rss file write failed");
+    rss_file.write(b"<channel>\n").expect("rss file write failed");
+    rss_file.write(b"<title>DonTorrent RSS</title>\n").expect("rss file write failed");
+    rss_file.write(b"<link>https://20.12.69.250</link>\n").expect("rss file write failed");
+    rss_file.write(b"<description>DonTorrent - ultimos torrents publicados</description>\n").expect("rss file write failed");
+    rss_file.write(b"<lastBuildDate>").expect("rss file write failed");
+    //rss_writer.write(String::from(now_date_time));
+    rss_file.write(b"</lastBuildDate>\n").expect("rss file write failed");
+    
     links_list
         .zip(1..121)
         .for_each(|(item, number)|{
@@ -466,44 +515,42 @@ fn main() {
             println!("          season:´{}´", &season);
             println!("         episode:´{}´", &episode);
 
-            let _torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
+            let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
                                                                                 &configdata.config.link_text_download_torrent);
             
+            let torrents_list = torrent_download_links.iter();
+            torrents_list
+                .for_each(|torr_item|{
+                    rss_file.write(b"<item>\n").expect("rss file write failed");
+                    rss_file.write(b"<title>").expect("rss file write failed");
+                    rss_file.write(format!("{} {}x{}",&cleaned_title,&season,&episode).as_bytes()).expect("rss file write failed");
+                    rss_file.write(b"</title>\n").expect("rss file write failed");
+                    rss_file.write(b"<category>").expect("rss file write failed");
+                    rss_file.write(&cathegory.as_bytes()).expect("rss file write failed");
+                    rss_file.write(b"</category>\n").expect("rss file write failed");
+                    rss_file.write(b"<link>").expect("rss file write failed");
+                    rss_file.write(&href_link.as_bytes()).expect("rss file write failed");
+                    rss_file.write(b"</link>\n").expect("rss file write failed");
+                    rss_file.write(b"<quality>").expect("rss file write failed");
+                    rss_file.write(&quality.as_bytes()).expect("rss file write failed");
+                    rss_file.write(b"</quality>\n").expect("rss file write failed");
+                    //rss_writer.write(b"<pubDate>2024-02-10 14:04:05.282570</pubDate>
+                    rss_file.write(b"<enclosure url=\"").expect("rss file write failed");
+                    rss_file.write(&torr_item.as_bytes()).expect("rss file write failed");
+                    //https://container765-deploy-static.cdndelta.com/torrents/peliculas/219913-El-superviviente-de-Auschwitz--2024---BluRay-720p.torrent
+                    rss_file.write(b"\" length=\"201269\" type=\"application/x-bittorrent\"/>\n").expect("rss file write failed");
+                    rss_file.write(b"</item>\n").expect("rss file write failed");
+                });    
             println!("\n");
+    
+    });
 
+    // Flush the writer to ensure all data is written to disk
+    rss_file.write(b"</channel>\n").expect("rss file write failed");
+    rss_file.write(b"</rss>\n").expect("rss file write failed");
+    rss_file.flush().expect("rss file flush failed");
 
-            // let test: String = String::from("<a class=\"text-white bg-primary rounded-pill d-block shadow text-decoration-none p-1\" href=\"//container765-deploy-static.cdndelta.com/torrents/variados/Beyonce_Lemonade.torrent\" download=\"\" style=\"font-size: 20px; font-weight: 500;\">Descargar</a>");
-            // println!("\n\nTest Result:{}",get_href_path(&test));
+    //println!("\n{:#?}",rss_channel);
+    //rss_channel.write_to(::std::io::sink()).unwrap(); // write to the channel to a writer
 
-            // let start_delimiter="href=\"";
-            // let end_delimiter="\"";
-            // let start_crop_position: usize;
-            // let end_crop_position: usize;
-                
-            // if test.find(start_delimiter).is_some() {  
-            //     start_crop_position = test.find(&start_delimiter).unwrap() + start_delimiter.len();
-            // } else{
-            //     start_crop_position = 0;
-            // };
-
-            // println!("   start crop:{}",&start_crop_position);
-
-            // let rest_of_html_a_element = String::from(&test.clone()[start_crop_position..]);
-
-            // println!("   rest of test:{}",&rest_of_html_a_element);
-
-            // if rest_of_html_a_element.find(end_delimiter).is_some() {  
-            //     end_crop_position = rest_of_html_a_element.find(&end_delimiter).unwrap();
-            // }else{
-            //     end_crop_position = 0;
-            // };
-
-            // println!("   end crop:{}",&end_crop_position);
-
-            // if start_crop_position>=1 && end_crop_position>=1{
-            //     println!("\n\nTest Result 1:{}",&rest_of_html_a_element[..end_crop_position]);
-            // }else{
-            //     println!("\n\nTest Result 1:{}",String::from(""));
-            // };
-        });
 }
