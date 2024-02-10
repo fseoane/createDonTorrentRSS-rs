@@ -10,7 +10,6 @@ use toml;
 use std::env;
 use regex;
 use chrono::prelude::*;
-//use std::{time::Instant};
 use std::fs::File;
 use std::io::prelude::*;
 
