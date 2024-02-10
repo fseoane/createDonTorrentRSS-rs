@@ -1,19 +1,19 @@
 
-Run time     : 2024-02-10 21:18:05.855672681+01:00
+Run time     : 2024-02-10 21:20:14.668140540+01:00
 
 Configuration:
 ------------------------------------------------------------------------
 telegram_url:               https://t.me/s/DonTorrent
-website_url:                https://dontorrent.band/
+website_url:                https://xxxx.dontorrent.band/
 website_path:               ultimos
 div_id_ultimos:             ultimos_torrents
 link_id_download_torrent:   download_torrent
 link_text_download_torrent: Descargar
 output_file:                rss.xml
 
-Reading:'https://t.me/s/DonTorrent'
+Reading telegram channel:'https://t.me/s/DonTorrent'
 
-Previous domain:'https://dontorrent.band/'
+Previous domain:'https://xxxx.dontorrent.band/'
 Last domain:'https://dontorrent.band/'
 
 Scraping last torrents from:'https://dontorrent.band/ultimos'
