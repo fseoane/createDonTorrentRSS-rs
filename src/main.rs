@@ -169,9 +169,9 @@ fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_strin
     let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
 
     let torrents_page = reqwest::blocking::get(href_link.as_str())
-        .unwrap()
+        .unwrap_or(" ")
         .text()
-        .unwrap();
+        .unwrap_or(" ");
     let torrents_page_document = scraper::Html::parse_document(&torrents_page);
 
     let torrents_page_selector = scraper::Selector::parse("a").unwrap();
@@ -185,7 +185,6 @@ fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_strin
         .for_each(|(item, _number)|{
             let href_path = get_href_path(&item).replace("//", "https://");
             torrent_links.push(String::from(&href_path));
-            
         });
         
     return torrent_links;
@@ -420,8 +419,8 @@ fn main() {
 
 
  
-    let now_date_time: String = Local::now().to_rfc2822();
-    //let now_date_time= Instant::now();
+    //let now_date_time: String = Local::now().to_rfc2822();
+    let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
     println!("\nRun time     : {}",now_date_time);
 
     // Print out the values to `stdout`.
@@ -463,9 +462,9 @@ fn main() {
     println!("\nScraping last torrents from:'{}'", last_torrents_url);
 
     let links_page = reqwest::blocking::get(last_torrents_url.as_str())
-        .unwrap()
+        .unwrap_or(" ")
         .text()
-        .unwrap();
+        .unwrap_or(" ");
 
     let document = scraper::Html::parse_document(&links_page);
    
