@@ -177,20 +177,15 @@ fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_strin
         .select(&torrents_page_selector)
         .filter(|item| item.inner_html() == String::from(search_for_string))
         .map(|item_text: scraper::ElementRef| item_text.html());
-    println!("..........................................................");
-    println!("        found torrent links:");
             
     torrents_links_list
         .zip(1..11)
-        .for_each(|(item, number)|{
+        .for_each(|(item, _number)|{
             let href_path = get_href_path(&item).replace("//", "https://");
-            println!("                         {}. ´{}´",&number, &href_path);
             torrent_links.push(String::from(&href_path));
             
         });
-    println!("---------------------------------------------------------");
         
-    //torrent_links.push(String::from(""));
     return torrent_links;
 }
 
@@ -506,14 +501,17 @@ fn main() {
             } else {
                 episode = String::from("");
             }
+            println!("------------------------------------------------------------------------"); 
+            println!("          href link:´{}´", &href_link);
+            println!("          cathegory:´{}´", &cathegory);
+            println!("              title:´{}´", &title);
+            println!("      cleaned title:´{}´", &cleaned_title);
+            println!("            quality:´{}´", &quality);
+            println!("             season:´{}´", &season);
+            println!("            episode:´{}´", &episode);
 
-            println!("       href link:´{}´", &href_link);
-            println!("       cathegory:´{}´", &cathegory);
-            println!("           title:´{}´", &title);
-            println!("   cleaned title:´{}´", &cleaned_title);
-            println!("         quality:´{}´", &quality);
-            println!("          season:´{}´", &season);
-            println!("         episode:´{}´", &episode);
+            println!("........................");
+            println!("found torrent links:");
 
             let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
                                                                                 &configdata.config.link_text_download_torrent);
@@ -521,26 +519,32 @@ fn main() {
             let torrents_list = torrent_download_links.iter();
             torrents_list
                 .for_each(|torr_item|{
-                    rss_file.write(b"<item>\n").expect("rss file write failed");
-                    rss_file.write(b"<title>").expect("rss file write failed");
-                    rss_file.write(format!("{} {}x{}",&cleaned_title,&season,&episode).as_bytes()).expect("rss file write failed");
-                    rss_file.write(b"</title>\n").expect("rss file write failed");
-                    rss_file.write(b"<category>").expect("rss file write failed");
-                    rss_file.write(&cathegory.as_bytes()).expect("rss file write failed");
-                    rss_file.write(b"</category>\n").expect("rss file write failed");
-                    rss_file.write(b"<link>").expect("rss file write failed");
-                    rss_file.write(&href_link.as_bytes()).expect("rss file write failed");
-                    rss_file.write(b"</link>\n").expect("rss file write failed");
-                    rss_file.write(b"<quality>").expect("rss file write failed");
-                    rss_file.write(&quality.as_bytes()).expect("rss file write failed");
-                    rss_file.write(b"</quality>\n").expect("rss file write failed");
-                    //rss_writer.write(b"<pubDate>2024-02-10 14:04:05.282570</pubDate>
-                    rss_file.write(b"<enclosure url=\"").expect("rss file write failed");
-                    rss_file.write(&torr_item.as_bytes()).expect("rss file write failed");
-                    //https://container765-deploy-static.cdndelta.com/torrents/peliculas/219913-El-superviviente-de-Auschwitz--2024---BluRay-720p.torrent
-                    rss_file.write(b"\" length=\"201269\" type=\"application/x-bittorrent\"/>\n").expect("rss file write failed");
-                    rss_file.write(b"</item>\n").expect("rss file write failed");
-                });    
+                    if episode.len()>0 && get_episode(&torr_item).eq(&episode){
+                        println!("                    ´{}´",&torr_item);
+            
+                        rss_file.write(b"<item>\n").expect("rss file write failed");
+                        rss_file.write(b"<title>").expect("rss file write failed");
+                        rss_file.write(format!("{} {}x{}",&cleaned_title,&season,&episode).as_bytes()).expect("rss file write failed");
+                        rss_file.write(b"</title>\n").expect("rss file write failed");
+                        rss_file.write(b"<category>").expect("rss file write failed");
+                        rss_file.write(&cathegory.as_bytes()).expect("rss file write failed");
+                        rss_file.write(b"</category>\n").expect("rss file write failed");
+                        rss_file.write(b"<link>").expect("rss file write failed");
+                        rss_file.write(&href_link.as_bytes()).expect("rss file write failed");
+                        rss_file.write(b"</link>\n").expect("rss file write failed");
+                        rss_file.write(b"<quality>").expect("rss file write failed");
+                        rss_file.write(&quality.as_bytes()).expect("rss file write failed");
+                        rss_file.write(b"</quality>\n").expect("rss file write failed");
+                        //rss_writer.write(b"<pubDate>2024-02-10 14:04:05.282570</pubDate>
+                        rss_file.write(b"<enclosure url=\"").expect("rss file write failed");
+                        rss_file.write(&torr_item.as_bytes()).expect("rss file write failed");
+                        //https://container765-deploy-static.cdndelta.com/torrents/peliculas/219913-El-superviviente-de-Auschwitz--2024---BluRay-720p.torrent
+                        rss_file.write(b"\" length=\"201269\" type=\"application/x-bittorrent\"/>\n").expect("rss file write failed");
+                        rss_file.write(b"</item>\n").expect("rss file write failed");
+                    }
+                });  
+            println!("------------------------------------------------------------------------"); 
+      
             println!("\n");
     
     });
