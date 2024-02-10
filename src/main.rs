@@ -462,7 +462,7 @@ fn main() {
     let links_page = reqwest::blocking::get(last_torrents_url.as_str())
         .unwrap()
         .text()
-        .unwrap(String::from(" "));
+        .unwrap_or(String::from(" "));
 
     let document = scraper::Html::parse_document(&links_page);
    
@@ -472,8 +472,8 @@ fn main() {
     let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
     
     // Create a new file for writing
-    //let rss_file = std::fs::File::create(&configdata.config.output_file)?;
-    let mut rss_file = std::fs::File::create("output.xml").expect("rss file could not be created");
+    let rss_file = std::fs::File::create(&configdata.config.output_file).expect("rss file could not be created");
+    //let mut rss_file = std::fs::File::create("output.xml").expect("rss file could not be created");
     // Create a buffered writer to write to the file
     //let mut rss_writer = std::io::BufWriter::new(rss_file);
 
