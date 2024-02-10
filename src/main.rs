@@ -277,19 +277,21 @@ fn get_episode(title: &String) -> String {
 }
 
 fn get_quality(title: &String) -> String {
-    if title.find("[480p]").is_some() {
+    if title.find("480p").is_some() {
         return String::from("480p");
-    } else if title.find("[720p]").is_some(){
+    } else if title.find("720p").is_some(){
         return String::from("720p");
-    } else if title.find("[1080p]").is_some(){
+    } else if title.find("1080p").is_some(){
         return String::from("1080p");
-    } else if title.find("[1440p]").is_some(){
+    } else if title.find("HDTV").is_some(){
+        return String::from("1080p");
+    } else if title.find("1440p").is_some(){
         return String::from("1440p");
-    } else if title.find("[2K]").is_some(){
+    } else if title.find("2K").is_some(){
         return String::from("1080p");
-    } else if title.find("[4K]").is_some(){
+    } else if title.find("4K").is_some(){
         return String::from("2160p");
-    } else if title.find("[8K]").is_some(){
+    } else if title.find("8K").is_some(){
         return String::from("4320p");
     } else {
     return String::from("");
@@ -485,7 +487,7 @@ fn main() {
     links_list
         .zip(1..121)
         .for_each(|(item, number)|{
-            println!("{}. {}", number, item);
+            println!("{}.---------------------------------------------------------------------", number);
 
             let href_path = get_href_path(&item);
             let href_link = format!("{}{}",&last_domain,&href_path);
@@ -501,40 +503,50 @@ fn main() {
             } else {
                 episode = String::from("");
             }
-            println!("------------------------------------------------------------------------"); 
             println!("          href link:´{}´", &href_link);
             println!("          cathegory:´{}´", &cathegory);
             println!("              title:´{}´", &title);
             println!("      cleaned title:´{}´", &cleaned_title);
-            println!("            quality:´{}´", &quality);
-            println!("             season:´{}´", &season);
-            println!("            episode:´{}´", &episode);
-
-            println!("........................");
-            println!("found torrent links:");
+            println!("      torrent links:");
 
             let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
                                                                                 &configdata.config.link_text_download_torrent);
             
+            let mut torr_quality: String = String::from("");
             let torrents_list = torrent_download_links.iter();
             torrents_list
                 .for_each(|torr_item|{
-                    if episode.len()>0 && get_episode(&torr_item).eq(&episode){
-                        println!("                    ´{}´",&torr_item);
+                    if episode.len()==0 || episode.len()>0 && (get_episode(&torr_item).eq(&episode)){
+                        println!("                    .- ´{}´",&torr_item);
             
                         rss_file.write(b"<item>\n").expect("rss file write failed");
-                        rss_file.write(b"<title>").expect("rss file write failed");
-                        rss_file.write(format!("{} {}x{}",&cleaned_title,&season,&episode).as_bytes()).expect("rss file write failed");
-                        rss_file.write(b"</title>\n").expect("rss file write failed");
+                        if season.len()>0 && episode.len()>0 {
+                            rss_file.write(b"<title>").expect("rss file write failed");
+                            rss_file.write(format!("{} {}x{}",&cleaned_title,&season,&episode).as_bytes()).expect("rss file write failed");
+                            rss_file.write(b"</title>\n").expect("rss file write failed");
+                        } else {
+                            rss_file.write(b"<title>").expect("rss file write failed");
+                            rss_file.write(&cleaned_title.as_bytes()).expect("rss file write failed");
+                            rss_file.write(b"</title>\n").expect("rss file write failed");
+                        }
                         rss_file.write(b"<category>").expect("rss file write failed");
                         rss_file.write(&cathegory.as_bytes()).expect("rss file write failed");
                         rss_file.write(b"</category>\n").expect("rss file write failed");
                         rss_file.write(b"<link>").expect("rss file write failed");
                         rss_file.write(&href_link.as_bytes()).expect("rss file write failed");
                         rss_file.write(b"</link>\n").expect("rss file write failed");
-                        rss_file.write(b"<quality>").expect("rss file write failed");
-                        rss_file.write(&quality.as_bytes()).expect("rss file write failed");
-                        rss_file.write(b"</quality>\n").expect("rss file write failed");
+                        
+                        torr_quality = get_quality(&torr_item);
+                        if torr_quality.len()>0{
+                            rss_file.write(b"<quality>").expect("rss file write failed");
+                            rss_file.write(&torr_quality.as_bytes()).expect("rss file write failed");
+                            rss_file.write(b"</quality>\n").expect("rss file write failed");
+                        } else {
+                            torr_quality = quality.clone();
+                            rss_file.write(b"<quality>").expect("rss file write failed");
+                            rss_file.write(&quality.as_bytes()).expect("rss file write failed");
+                            rss_file.write(b"</quality>\n").expect("rss file write failed");
+                        };
                         //rss_writer.write(b"<pubDate>2024-02-10 14:04:05.282570</pubDate>
                         rss_file.write(b"<enclosure url=\"").expect("rss file write failed");
                         rss_file.write(&torr_item.as_bytes()).expect("rss file write failed");
@@ -543,6 +555,9 @@ fn main() {
                         rss_file.write(b"</item>\n").expect("rss file write failed");
                     }
                 });  
+            println!("            quality:´{}´", &torr_quality);
+            println!("             season:´{}´", &season);
+            println!("            episode:´{}´", &episode);
             println!("------------------------------------------------------------------------"); 
       
             println!("\n");
