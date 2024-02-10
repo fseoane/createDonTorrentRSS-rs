@@ -414,10 +414,7 @@ fn main() {
     let configdata: ConfigData = read_config(filename);
 
     let previous_domain = configdata.config.host.clone();
-
-
  
-    //let now_date_time: String = Local::now().to_rfc2822();
     let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
     println!("\nRun time     : {}",now_date_time);
 
@@ -472,11 +469,9 @@ fn main() {
     let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
     
     // Create a new file for writing
-    let rss_file = std::fs::File::create(&configdata.config.output_file).expect("rss file could not be created");
+    let mut rss_file = std::fs::File::create(&configdata.config.output_file).expect("rss file could not be created");
     //let mut rss_file = std::fs::File::create("output.xml").expect("rss file could not be created");
-    // Create a buffered writer to write to the file
-    //let mut rss_writer = std::io::BufWriter::new(rss_file);
-
+    
     // Write some data to the file
     rss_file.write(b"<rss version=\"2.0\">\n").expect("rss file write failed");
     rss_file.write(b"<channel>\n").expect("rss file write failed");
@@ -564,12 +559,12 @@ fn main() {
             println!("            episode:´{}´", &episode);    
     });
 
-    // Flush the writer to ensure all data is written to disk
+    // close channel and rss sections 
     rss_file.write(b"</channel>\n").expect("rss file write failed");
     rss_file.write(b"</rss>\n").expect("rss file write failed");
+   
+    // Flush the writer to ensure all data is written to disk
     rss_file.flush().expect("rss file flush failed");
 
-    //println!("\n{:#?}",rss_channel);
-    //rss_channel.write_to(::std::io::sink()).unwrap(); // write to the channel to a writer
 
 }
