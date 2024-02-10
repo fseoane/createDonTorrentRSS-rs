@@ -1,5 +1,6 @@
 use reqwest;
 use serde_derive::{Serialize,Deserialize};
+use std::fmt::Debug;
 use std::fs;
 use std::io::Write;
 use std::process::exit;
@@ -10,6 +11,7 @@ use std::env;
 use regex;
 use rss::{CategoryBuilder,ItemBuilder,ChannelBuilder,EnclosureBuilder};
 use chrono::prelude::*;
+//use std::{time::Instant};
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -415,7 +417,13 @@ fn main() {
     let configdata: ConfigData = read_config(filename);
 
     let previous_domain = configdata.config.host.clone();
-    
+
+
+ 
+    let now_date_time: String = Local::now().to_rfc2822();
+    //let now_date_time= Instant::now();
+    println!("\nRun time     : {}",now_date_time);
+
     // Print out the values to `stdout`.
     println!("\nConfiguration:"); 
     println!("------------------------------------------------------------------------"); 
@@ -473,15 +481,13 @@ fn main() {
     //let mut rss_writer = std::io::BufWriter::new(rss_file);
 
     // Write some data to the file
-    let now_date_time: DateTime<Local> = Local::now();
-    println!("{}",now_date_time);
     rss_file.write(b"<rss version=\"2.0\">\n").expect("rss file write failed");
     rss_file.write(b"<channel>\n").expect("rss file write failed");
     rss_file.write(b"<title>DonTorrent RSS</title>\n").expect("rss file write failed");
     rss_file.write(b"<link>https://20.12.69.250</link>\n").expect("rss file write failed");
     rss_file.write(b"<description>DonTorrent - ultimos torrents publicados</description>\n").expect("rss file write failed");
     rss_file.write(b"<lastBuildDate>").expect("rss file write failed");
-    //rss_writer.write(String::from(now_date_time));
+    rss_file.write(&now_date_time.as_bytes()).expect("rss file write failed");
     rss_file.write(b"</lastBuildDate>\n").expect("rss file write failed");
     
     links_list
@@ -547,21 +553,18 @@ fn main() {
                             rss_file.write(&quality.as_bytes()).expect("rss file write failed");
                             rss_file.write(b"</quality>\n").expect("rss file write failed");
                         };
-                        //rss_writer.write(b"<pubDate>2024-02-10 14:04:05.282570</pubDate>
+                        rss_file.write(b"<pubDate>").expect("rss file write failed");
+                        rss_file.write(&now_date_time.as_bytes()).expect("rss file write failed");
+                        rss_file.write(b"</pubDate>").expect("rss file write failed");
                         rss_file.write(b"<enclosure url=\"").expect("rss file write failed");
                         rss_file.write(&torr_item.as_bytes()).expect("rss file write failed");
-                        //https://container765-deploy-static.cdndelta.com/torrents/peliculas/219913-El-superviviente-de-Auschwitz--2024---BluRay-720p.torrent
                         rss_file.write(b"\" length=\"201269\" type=\"application/x-bittorrent\"/>\n").expect("rss file write failed");
                         rss_file.write(b"</item>\n").expect("rss file write failed");
                     }
                 });  
             println!("            quality:´{}´", &torr_quality);
             println!("             season:´{}´", &season);
-            println!("            episode:´{}´", &episode);
-            println!("------------------------------------------------------------------------"); 
-      
-            println!("\n");
-    
+            println!("            episode:´{}´", &episode);    
     });
 
     // Flush the writer to ensure all data is written to disk
