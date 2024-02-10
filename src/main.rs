@@ -20,9 +20,10 @@ struct ConfigData {
 }
 #[derive(Serialize,Deserialize, Debug)]
 struct Settings {
-    host: String,
-	url: String,
-	div_id_ultimos: String,
+    telegram_url: String,
+	website_url: String,
+    website_path: String,
+    div_id_ultimos: String,
     link_id_download_torrent: String,
     link_text_download_torrent: String,
     output_file: String,
@@ -413,7 +414,7 @@ fn main() {
     };
     let configdata: ConfigData = read_config(filename);
 
-    let previous_domain = configdata.config.host.clone();
+    let previous_domain = configdata.config.website_url.clone();
  
     let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
     println!("\nRun time     : {}",now_date_time);
@@ -421,22 +422,24 @@ fn main() {
     // Print out the values to `stdout`.
     println!("\nConfiguration:"); 
     println!("------------------------------------------------------------------------"); 
-    println!("host:                       {}", &configdata.config.host); 
-    println!("url:                        {}", &configdata.config.url);
+    println!("telegram_url:               {}", &configdata.config.telegram_url); 
+    println!("website_url:                {}", &configdata.config.website_url); 
+    println!("website_path:               {}", &configdata.config.website_path);
     println!("div_id_ultimos:             {}", &configdata.config.div_id_ultimos);
     println!("link_id_download_torrent:   {}", &configdata.config.link_id_download_torrent);    
     println!("link_text_download_torrent: {}", &configdata.config.link_text_download_torrent);
     println!("output_file:                {}", &configdata.config.output_file);
 
-    let last_domain = get_last_dontorrent_domain("https://t.me/s/DonTorrent");
+    let last_domain = get_last_dontorrent_domain(&configdata.config.telegram_url);
     
     println!("\nPrevious domain:'{}'", previous_domain);
     println!("Last domain:'{}'", last_domain);
     
     if previous_domain.ne(&last_domain){
         let newsettings: Settings = Settings{
-            host:last_domain.clone(),
-            url:configdata.config.url.clone(),
+            telegram_url:configdata.config.telegram_url,
+            website_url:last_domain.clone(),
+            website_path:configdata.config.website_path.clone(),
             div_id_ultimos: configdata.config.div_id_ultimos.clone(),
             link_id_download_torrent:configdata.config.link_id_download_torrent.clone(),
             link_text_download_torrent:configdata.config.link_text_download_torrent.clone(),
@@ -449,7 +452,7 @@ fn main() {
         write_config(filename,&newconfigdata);
     };
 
-    let url_path = configdata.config.url.clone();
+    let url_path = configdata.config.website_path.clone();
     let last_torrents_url = format!("{}/{}",last_domain,url_path)
         .replace("//", "/")
         .replace(":/", "://");

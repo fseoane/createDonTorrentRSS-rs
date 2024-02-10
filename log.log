@@ -1,0 +1,1218 @@
+
+Run time     : 2024-02-10 21:04:00.283088948+01:00
+
+Configuration:
+------------------------------------------------------------------------
+host:                       https://dontorrent.band/
+url:                        ultimos
+div_id_ultimos:             ultimos_torrents
+link_id_download_torrent:   download_torrent
+link_text_download_torrent: Descargar
+output_file:                rss.xml
+
+Reading:'https://t.me/s/DonTorrent'
+
+Previous domain:'https://dontorrent.band/'
+Last domain:'https://dontorrent.band/'
+
+Scraping last torrents from:'https://dontorrent.band/ultimos'
+1.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27173/Aquaman-y-el-reino-perdido´
+          cathegory:´pelicula´
+              title:´Aquaman y el reino perdido´
+      cleaned title:´Aquaman Y El Reino Perdido´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219605-Aquaman-y-el-reino-perdido--2023---BluRay-1080p.torrent´
+            quality:´1080p´
+             season:´´
+            episode:´´
+2.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27172/The-Underdoggs´
+          cathegory:´pelicula´
+              title:´The Underdoggs´
+      cleaned title:´The Underdoggs´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219569-The-Underdoggs--2024---BluRay-1080p.torrent´
+            quality:´1080p´
+             season:´´
+            episode:´´
+3.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27171/Noche-de-paz´
+          cathegory:´pelicula´
+              title:´Noche de paz´
+      cleaned title:´Noche De Paz´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219624-Noche-de-paz--Silent-Night---2023---BluRay-1080p.torrent´
+            quality:´1080p´
+             season:´´
+            episode:´´
+4.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27170/El-superviviente-de-Auschwitz´
+          cathegory:´pelicula´
+              title:´El superviviente de Auschwitz´
+      cleaned title:´El Superviviente De Auschwitz´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219913-El-superviviente-de-Auschwitz--2024---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+5.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27169/Desmadre-incluido´
+          cathegory:´pelicula´
+              title:´Desmadre incluido´
+      cleaned title:´Desmadre Incluido´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219972-Desmadre-incluido--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+6.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27168/Before-Night-Falls´
+          cathegory:´pelicula´
+              title:´Before Night Falls´
+      cleaned title:´Before Night Falls´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219988-Before-Night-Falls--Menjelang-Magrib---2022---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+7.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27167/Campamento-Hideout´
+          cathegory:´pelicula´
+              title:´Campamento Hideout´
+      cleaned title:´Campamento Hideout´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219899-Campamento-Hideout--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+8.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27166/La-generacion-capsula´
+          cathegory:´pelicula´
+              title:´La generacion capsula´
+      cleaned title:´La Generacion Capsula´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219807-La-generacion-capsula--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+9.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27165/Aporia´
+          cathegory:´pelicula´
+              title:´Aporia´
+      cleaned title:´Aporia´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219816-Aporia--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+10.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27164/The-Warrant-Breakers-Law´
+          cathegory:´pelicula´
+              title:´The Warrant Breakers Law´
+      cleaned title:´The Warrant Breakers Law´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219756-The-Warrant-Breakers-Law--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+11.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27163/Los-guardianes-de-la-formula´
+          cathegory:´pelicula´
+              title:´Los guardianes de la formula´
+      cleaned title:´Los Guardianes De La Formula´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219768-Los-guardianes-de-la-formula--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+12.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27162/Amanece´
+          cathegory:´pelicula´
+              title:´Amanece´
+      cleaned title:´Amanece´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219792-Amanece--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+13.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27161/Chinas´
+          cathegory:´pelicula´
+              title:´Chinas´
+      cleaned title:´Chinas´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219696-Chinas--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+14.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27160/O-corno´
+          cathegory:´pelicula´
+              title:´O corno´
+      cleaned title:´O Corno´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219698-O-corno--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+15.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/pelicula/27159/Sound-of-Freedom´
+          cathegory:´pelicula´
+              title:´Sound of Freedom´
+      cleaned title:´Sound Of Freedom´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/peliculas/219716-Sound-of-Freedom--2023---BluRay-720p.torrent´
+            quality:´720p´
+             season:´´
+            episode:´´
+16.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106523/106526/SurrealEstate-2-Temporada-720p´
+          cathegory:´serie´
+              title:´SurrealEstate - 2ª Temporada [720p]: 2x06´
+      cleaned title:´Surrealestate´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220003-SurrealEstate--HDTV-720p-AC3-5-1-cap-06.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´06´
+17.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106524/106525/SurrealEstate-2-Temporada´
+          cathegory:´serie´
+              title:´SurrealEstate - 2ª Temporada: 2x06´
+      cleaned title:´Surrealestate´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220081-SurrealEstate--HDTV-cap-06.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´06´
+18.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105987/105990/Saving-Hope-2-Temporada-720p´
+          cathegory:´serie´
+              title:´Saving Hope - 2ª Temporada [720p]: 2x10´
+      cleaned title:´Saving Hope´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219927-Saving-Hope--HDTV-720p-AC3-5-1-cap-10.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´10´
+19.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105988/105989/Saving-Hope-2-Temporada´
+          cathegory:´serie´
+              title:´Saving Hope - 2ª Temporada: 2x10´
+      cleaned title:´Saving Hope´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220080-Saving-Hope--HDTV-cap-10.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´10´
+20.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105520/105523/Mismatch-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Mismatch - 1ª Temporada [720p]: 1x06´
+      cleaned title:´Mismatch´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219943-Mismatch--HDTV-720p-AC3-5-1-cap-06.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´06´
+21.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105521/105522/Mismatch-1-Temporada´
+          cathegory:´serie´
+              title:´Mismatch - 1ª Temporada: 1x06´
+      cleaned title:´Mismatch´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220078-Mismatch--HDTV-cap-06.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´06´
+22.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106673/106676/Found-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Found - 1ª Temporada [720p]: 1x04´
+      cleaned title:´Found´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219825-Found--HDTV-720p-AC3-5-1-cap-04.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´04´
+23.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106674/106675/Found-1-Temporada´
+          cathegory:´serie´
+              title:´Found - 1ª Temporada: 1x04´
+      cleaned title:´Found´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220073-Found--HDTV-cap-04.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´04´
+24.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106693/106696/Carmen-Curlers-2-Temporada-720p´
+          cathegory:´serie´
+              title:´Carmen Curlers - 2ª Temporada [720p]: 2x03´
+      cleaned title:´Carmen Curlers´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219903-Carmen-Curlers--HDTV-720p-AC3-5-1-cap-03.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´03´
+25.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106694/106695/Carmen-Curlers-2-Temporada´
+          cathegory:´serie´
+              title:´Carmen Curlers - 2ª Temporada: 2x03´
+      cleaned title:´Carmen Curlers´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220070-Carmen-Curlers--HDTV-cap-03.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´03´
+26.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106717/106720/Trigger-Point-2-Temporada-720p´
+          cathegory:´serie´
+              title:´Trigger Point - 2ª Temporada [720p]: 2x01´
+      cleaned title:´Trigger Point´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219953-Trigger-Point--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´01´
+27.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106718/106719/Trigger-Point-2-Temporada´
+          cathegory:´serie´
+              title:´Trigger Point - 2ª Temporada: 2x01´
+      cleaned title:´Trigger Point´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220019-Trigger-Point--HDTV-cap-01.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´01´
+28.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106615/106618/Sangre-y-Dinero-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Sangre y Dinero - 1ª Temporada [720p]: 1x06´
+      cleaned title:´Sangre Y Dinero´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219585-Sangre-y-Dinero--HDTV-720p-AC3-5-1-cap-06.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´06´
+29.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106616/106617/Sangre-y-Dinero-1-Temporada´
+          cathegory:´serie´
+              title:´Sangre y Dinero - 1ª Temporada: 1x06´
+      cleaned title:´Sangre Y Dinero´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219870-Sangre-y-Dinero--HDTV-cap-06.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´06´
+30.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106621/106624/The-Vanishing-Triangle-1-Temporada-720p´
+          cathegory:´serie´
+              title:´The Vanishing Triangle - 1ª Temporada [720p]: 1x06´
+      cleaned title:´The Vanishing Triangle´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219367-The-Vanishing-Triangle--HDTV-720p-AC3-5-1-cap-06.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´06´
+31.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106622/106623/The-Vanishing-Triangle-1-Temporada´
+          cathegory:´serie´
+              title:´The Vanishing Triangle - 1ª Temporada: 1x06´
+      cleaned title:´The Vanishing Triangle´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219776-The-Vanishing-Triangle--HDTV-cap-06.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´06´
+32.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105987/105990/Saving-Hope-2-Temporada-720p´
+          cathegory:´serie´
+              title:´Saving Hope - 2ª Temporada [720p]: 2x09´
+      cleaned title:´Saving Hope´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219926-Saving-Hope--HDTV-720p-AC3-5-1-cap-09.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´09´
+33.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105988/105989/Saving-Hope-2-Temporada´
+          cathegory:´serie´
+              title:´Saving Hope - 2ª Temporada: 2x09´
+      cleaned title:´Saving Hope´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220018-Saving-Hope--HDTV-cap-09.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´09´
+34.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106275/106278/Magnum-5-Temporada-720p´
+          cathegory:´serie´
+              title:´Magnum - 5ª Temporada [720p]: 5x06´
+      cleaned title:´Magnum´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219982-Magnun-PI--HDTV-720p-AC3-5-1-cap-06.torrent´
+            quality:´720p´
+             season:´5´
+            episode:´06´
+35.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106276/106277/Magnum-5-Temporada´
+          cathegory:´serie´
+              title:´Magnum - 5ª Temporada: 5x06´
+      cleaned title:´Magnum´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220016-Magnun-PI--HDTV-cap-06.torrent´
+            quality:´1080p´
+             season:´5´
+            episode:´06´
+36.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106673/106676/Found-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Found - 1ª Temporada [720p]: 1x03´
+      cleaned title:´Found´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219824-Found--HDTV-720p-AC3-5-1-cap-03.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´03´
+37.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106674/106675/Found-1-Temporada´
+          cathegory:´serie´
+              title:´Found - 1ª Temporada: 1x03´
+      cleaned title:´Found´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220011-Found--HDTV-cap-03.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´03´
+38.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106693/106696/Carmen-Curlers-2-Temporada-720p´
+          cathegory:´serie´
+              title:´Carmen Curlers - 2ª Temporada [720p]: 2x02´
+      cleaned title:´Carmen Curlers´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219902-Carmen-Curlers--HDTV-720p-AC3-5-1-cap-02.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´02´
+39.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106694/106695/Carmen-Curlers-2-Temporada´
+          cathegory:´serie´
+              title:´Carmen Curlers - 2ª Temporada: 2x02´
+      cleaned title:´Carmen Curlers´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/220009-Carmen-Curlers--HDTV-cap-02.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´02´
+40.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106285/106288/The-Irrational-1-Temporada-720p´
+          cathegory:´serie´
+              title:´The Irrational - 1ª Temporada [720p]: 1x05´
+      cleaned title:´The Irrational´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219930-The-Irrational--HDTV-720p-AC3-5-1-cap-05.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´05´
+41.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106286/106287/The-Irrational-1-Temporada´
+          cathegory:´serie´
+              title:´The Irrational - 1ª Temporada: 1x05´
+      cleaned title:´The Irrational´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219971-The-Irrational--HDTV-cap-05.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´05´
+42.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105987/105990/Saving-Hope-2-Temporada-720p´
+          cathegory:´serie´
+              title:´Saving Hope - 2ª Temporada [720p]: 2x08´
+      cleaned title:´Saving Hope´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219925-Saving-Hope--HDTV-720p-AC3-5-1-cap-08.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´08´
+43.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105988/105989/Saving-Hope-2-Temporada´
+          cathegory:´serie´
+              title:´Saving Hope - 2ª Temporada: 2x08´
+      cleaned title:´Saving Hope´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219970-Saving-Hope--HDTV-cap-08.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´08´
+44.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106267/106270/Orphan-Black-Echoes-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Orphan Black Echoes - 1ª Temporada [720p]: 1x06´
+      cleaned title:´Orphan Black Echoes´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219922-Orphan-Black-Echoes--HDTV-720p-AC3-5-1-cap-06.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´06´
+45.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106268/106269/Orphan-Black-Echoes-1-Temporada´
+          cathegory:´serie´
+              title:´Orphan Black Echoes - 1ª Temporada: 1x06´
+      cleaned title:´Orphan Black Echoes´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219969-Orphan-Black-Echoes--HDTV-cap-06.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´06´
+46.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106673/106676/Found-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Found - 1ª Temporada [720p]: 1x02´
+      cleaned title:´Found´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219823-Found--HDTV-720p-AC3-5-1-cap-02.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´02´
+47.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106674/106675/Found-1-Temporada´
+          cathegory:´serie´
+              title:´Found - 1ª Temporada: 1x02´
+      cleaned title:´Found´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219965-Found--HDTV-cap-02.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´02´
+48.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106693/106696/Carmen-Curlers-2-Temporada-720p´
+          cathegory:´serie´
+              title:´Carmen Curlers - 2ª Temporada [720p]: 2x01´
+      cleaned title:´Carmen Curlers´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219901-Carmen-Curlers--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´01´
+49.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106694/106695/Carmen-Curlers-2-Temporada´
+          cathegory:´serie´
+              title:´Carmen Curlers - 2ª Temporada: 2x01´
+      cleaned title:´Carmen Curlers´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219963-Carmen-Curlers--HDTV-cap-01.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´01´
+50.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106377/106380/Arcadia-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Arcadia - 1ª Temporada [720p]: 1x04´
+      cleaned title:´Arcadia´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219896-Arcadia--HDTV-720p-AC3-5-1-cap-04.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´04´
+51.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106378/106379/Arcadia-1-Temporada´
+          cathegory:´serie´
+              title:´Arcadia - 1ª Temporada: 1x04´
+      cleaned title:´Arcadia´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219961-Arcadia--HDTV-cap-04.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´04´
+52.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106511/106514/El-turista-2-Temporada-720p´
+          cathegory:´serie´
+              title:´El turista - 2ª Temporada [720p]: 2x04´
+      cleaned title:´El Turista´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219959-El-turista--HDTV-720p-AC3-5-1-cap-044.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´04´
+53.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106512/106513/El-turista-2-Temporada´
+          cathegory:´serie´
+              title:´El turista - 2ª Temporada: 2x04´
+      cleaned title:´El Turista´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219960-El-turista--HDTV-cap-044.torrent´
+            quality:´1080p´
+             season:´2´
+            episode:´04´
+54.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106621/106624/The-Vanishing-Triangle-1-Temporada-720p´
+          cathegory:´serie´
+              title:´The Vanishing Triangle - 1ª Temporada [720p]: 1x05´
+      cleaned title:´The Vanishing Triangle´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219366-The-Vanishing-Triangle--HDTV-720p-AC3-5-1-cap-05.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´05´
+55.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106622/106623/The-Vanishing-Triangle-1-Temporada´
+          cathegory:´serie´
+              title:´The Vanishing Triangle - 1ª Temporada: 1x05´
+      cleaned title:´The Vanishing Triangle´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219709-The-Vanishing-Triangle--HDTV-cap-05.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´05´
+56.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106615/106618/Sangre-y-Dinero-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Sangre y Dinero - 1ª Temporada [720p]: 1x05´
+      cleaned title:´Sangre Y Dinero´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219584-Sangre-y-Dinero--HDTV-720p-AC3-5-1-cap-05.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´05´
+57.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106616/106617/Sangre-y-Dinero-1-Temporada´
+          cathegory:´serie´
+              title:´Sangre y Dinero - 1ª Temporada: 1x05´
+      cleaned title:´Sangre Y Dinero´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219811-Sangre-y-Dinero--HDTV-cap-05.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´05´
+58.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105899/105902/Vestidas-De-Azul-1-Temporada-720p´
+          cathegory:´serie´
+              title:´Vestidas De Azul - 1ª Temporada [720p]: 1x08´
+      cleaned title:´Vestidas De Azul´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219859-Vestidas-de-Azul--HDTV-720p-AC3-5-1-cap-08.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´08´
+59.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/105900/105901/Vestidas-De-Azul-1-Temporada´
+          cathegory:´serie´
+              title:´Vestidas De Azul - 1ª Temporada: 1x08´
+      cleaned title:´Vestidas De Azul´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219934-Vestidas-de-Azul--HDTV-cap-08.torrent´
+            quality:´1080p´
+             season:´1´
+            episode:´08´
+60.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106579/106582/True-Detective-4-Temporada-720p´
+          cathegory:´serie´
+              title:´True Detective - 4ª Temporada [720p]: 4x04´
+      cleaned title:´True Detective´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219857-True-Detective--HDTV-720p-AC3-5-1-cap-04.torrent´
+            quality:´720p´
+             season:´4´
+            episode:´04´
+61.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/serie/106580/106581/True-Detective-4-Temporada´
+          cathegory:´serie´
+              title:´True Detective - 4ª Temporada: 4x04´
+      cleaned title:´True Detective´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/series/219933-True-Detective--HDTV-cap-04.torrent´
+            quality:´1080p´
+             season:´4´
+            episode:´04´
+62.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/2672/2673/Drag-Race-Espaa´
+          cathegory:´documental´
+              title:´Drag Race España: 2x01´
+      cleaned title:´Drag Race España´
+      torrent links:
+            quality:´´
+             season:´2´
+            episode:´01´
+63.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4278/4279/Happy-Jail´
+          cathegory:´documental´
+              title:´Happy Jail: 1x01´
+      cleaned title:´Happy Jail´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/172987-Happy-Jail---Temporada-1--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´01´
+64.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4276/4277/Senzo-El-asesinato-de-una-estrella-del-ftbol´
+          cathegory:´documental´
+              title:´Senzo: El asesinato de una estrella del fútbol: 1x01´
+      cleaned title:´Senzo El Asesinato De Una Estrella Del Fútbol´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/173130-Senzo-El-Asesinato-De-Una-Estrella-Del-Futbol---Temporada-1--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´01´
+65.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4274/4275/800-metros´
+          cathegory:´documental´
+              title:´800 metros: 1x01 al 1x03´
+      cleaned title:´800 Metros´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/171513-800-Metros---Temporada-1--HDTV-720p-AC3-5-1-cap-01-al-03.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´01´
+66.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix´
+          cathegory:´documental´
+              title:´Fórmula 1: La emoción de un Grand Prix: 4x01´
+      cleaned title:´Fórmula 1 La Emoción De Un Grand Prix´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/148266_-1616185290-Formula-1-La-Emocion-De-Un-Grand-Prix---Temporada-3--HDTV-720p-AC3-5-1-3x01al3x10.torrent´
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170332-Formula-1-La-Emocion-De-Un-Grand-Prix---Temporada-4--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´4´
+            episode:´01´
+67.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4261/4262/Operacin-Marea-Negra-La-travesia-suicida´
+          cathegory:´documental´
+              title:´Operación Marea Negra: La travesia suicida: 1x03´
+      cleaned title:´Operación Marea Negra La Travesia Suicida´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170499-Operacion-Marea-Negra-documental---Temporada-1--HDTV-720p-AC3-5-1-cap-03.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´03´
+68.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4261/4262/Operacin-Marea-Negra-La-travesia-suicida´
+          cathegory:´documental´
+              title:´Operación Marea Negra: La travesia suicida: 1x02´
+      cleaned title:´Operación Marea Negra La Travesia Suicida´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170469-Operacion-Marea-Negra-documental---Temporada-1--HDTV-720p-AC3-5-1-cap-02.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´02´
+69.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix´
+          cathegory:´documental´
+              title:´Fórmula 1: La emoción de un Grand Prix: 3x01 al 3x10´
+      cleaned title:´Fórmula 1 La Emoción De Un Grand Prix´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/148266_-1616185290-Formula-1-La-Emocion-De-Un-Grand-Prix---Temporada-3--HDTV-720p-AC3-5-1-3x01al3x10.torrent´
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170332-Formula-1-La-Emocion-De-Un-Grand-Prix---Temporada-4--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´3´
+            episode:´01´
+70.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4267/4268/Los-diarios-de-Andy-Warhol´
+          cathegory:´documental´
+              title:´Los diarios de Andy Warhol: 1x04 al 1x06´
+      cleaned title:´Los Diarios De Andy Warhol´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170357-Los-Diarios-De-Andy-Warhol---Temporada-1--HDTV-720p-AC3-5-1-cap-04-al-06.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´04´
+71.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4267/4268/Los-diarios-de-Andy-Warhol´
+          cathegory:´documental´
+              title:´Los diarios de Andy Warhol: 1x01 al 1x03´
+      cleaned title:´Los Diarios De Andy Warhol´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170341-Los-Diarios-De-Andy-Warhol---Temporada-1--HDTV-720p-AC3-5-1-cap-01-al-03.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´01´
+72.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix´
+          cathegory:´documental´
+              title:´Fórmula 1: La emoción de un Grand Prix: 2x09 &amp; 2x10´
+      cleaned title:´Fórmula 1 La Emoción De Un Grand Prix 2x10´
+      torrent links:
+            quality:´´
+             season:´2´
+            episode:´09´
+73.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix´
+          cathegory:´documental´
+              title:´Fórmula 1: La emoción de un Grand Prix: 2x05 al 2x08´
+      cleaned title:´Fórmula 1 La Emoción De Un Grand Prix´
+      torrent links:
+            quality:´´
+             season:´2´
+            episode:´05´
+74.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix´
+          cathegory:´documental´
+              title:´Fórmula 1: La emoción de un Grand Prix: 2x01 al 2x04´
+      cleaned title:´Fórmula 1 La Emoción De Un Grand Prix´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/148266_-1616185290-Formula-1-La-Emocion-De-Un-Grand-Prix---Temporada-3--HDTV-720p-AC3-5-1-3x01al3x10.torrent´
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170332-Formula-1-La-Emocion-De-Un-Grand-Prix---Temporada-4--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´2´
+            episode:´01´
+75.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/documental/4261/4262/Operacin-Marea-Negra-La-travesia-suicida´
+          cathegory:´documental´
+              title:´Operación Marea Negra: La travesia suicida: 1x01´
+      cleaned title:´Operación Marea Negra La Travesia Suicida´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/documentales/170468-Operacion-Marea-Negra-documental---Temporada-1--HDTV-720p-AC3-5-1-cap-01.torrent´
+            quality:´720p´
+             season:´1´
+            episode:´01´
+76.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8114/Elton-John-Jewel-Box-8CD-Super-Deluxe-Edition-´
+          cathegory:´musica´
+              title:´Elton John - Jewel Box [8CD Super Deluxe Edition] ´
+      cleaned title:´Elton John - Jewel Box´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Elton_John_-_Elton__Jewel_Box_{8CD_Super_Deluxe_Edition}_(2020)_Mp3_320kbps.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+77.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8113/Eric-Clapton-Eric-Claptons-Crossroads-Guitar-Festival-2019´
+          cathegory:´musica´
+              title:´Eric Clapton - Eric Claptons Crossroads Guitar Festival 2019´
+      cleaned title:´Eric Clapton - Eric Claptons Crossroads Guitar Festival 2019´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Eric_Clapton.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+78.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8112/The-Who-Whos-next-´
+          cathegory:´musica´
+              title:´The Who - Whos next ´
+      cleaned title:´The Who - Whos Next´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/The_Who.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+79.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8111/Lil-Wayne-No-Ceilings-3´
+          cathegory:´musica´
+              title:´Lil Wayne - No Ceilings 3´
+      cleaned title:´Lil Wayne - No Ceilings 3´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Lil_Wayne_-_No_Ceilings_3_(2020).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+80.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8110/Miley-Cyrus-Plastic-Hearts´
+          cathegory:´musica´
+              title:´Miley Cyrus - Plastic Hearts´
+      cleaned title:´Miley Cyrus - Plastic Hearts´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Miley_Cyrus_-_Plastic_Hearts_(2020).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+81.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8109/Neil-Diamond-Classic-Diamonds-With-The-London-Symphony-Orchestra´
+          cathegory:´musica´
+              title:´Neil Diamond - Classic Diamonds With The London Symphony Orchestra´
+      cleaned title:´Neil Diamond - Classic Diamonds With The London Symphony Orchestra´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Neil_Diamond_-_Classic_Diamonds_With_The_London_Symphony_Orchestra_(2020)_[320_KBPS].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+82.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8108/Shaggy-Christmas-in-the-islands´
+          cathegory:´musica´
+              title:´Shaggy - Christmas in the islands´
+      cleaned title:´Shaggy - Christmas In The Islands´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Shaggy_-_Christmas_in_the_Islands_(2020).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+83.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8107/Bush-8206The-Kingdom-Deluxe-Edition´
+          cathegory:´musica´
+              title:´Bush - ‎The Kingdom (Deluxe Edition)´
+      cleaned title:´Bush - Kingdom (deluxe Edition)´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/BushTheKingdomDeluxe.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+84.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8106/Whitesnake-Love-Songs´
+          cathegory:´musica´
+              title:´Whitesnake - Love Songs´
+      cleaned title:´Whitesnake - Love Songs´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Whitesnake_-_Love_Songs_(2020_Remix).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+85.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8105/50-Timeless-Christmas-Hits´
+          cathegory:´musica´
+              title:´50 Timeless Christmas Hits´
+      cleaned title:´50 Timeless Christmas Hits´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/VA_-_50_Christmas_Timeless_Hits_(All_Tracks_Remastered)_(2020).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+86.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8104/The-Cure-Discografa-De-Estudio´
+          cathegory:´musica´
+              title:´The Cure - Discografía De Estudio´
+      cleaned title:´The Cure - Discografía De Estudio´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/The_Cure_Studio_Discography.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+87.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8103/Dj-Tiesto-Discografa-De-Estudio´
+          cathegory:´musica´
+              title:´Dj Tiesto - Discografía De Estudio´
+      cleaned title:´Dj Tiesto - Discografía De Estudio´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Tiesto_-_Studio_Discography_(2001-2020).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+88.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8102/Thin-Lizzy-Discografa´
+          cathegory:´musica´
+              title:´Thin Lizzy - Discografía´
+      cleaned title:´Thin Lizzy - Discografía´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/Thin_Lizzy_-_Discography_[Deluxe]_(1971-2013).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+89.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8101/Carlos-Santana-Discografa-1969-2005´
+          cathegory:´musica´
+              title:´Carlos Santana - Discografía (1969-2005)´
+      cleaned title:´Carlos Santana - Discografía (1969-2005)´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/SantanaZ-ZDiscography.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+90.---------------------------------------------------------------------
+          href link:´https://dontorrent.band/musica/8100/Julio-Iglesias-Discografa-1969-2015´
+          cathegory:´musica´
+              title:´Julio Iglesias - Discografía (1969-2015)´
+      cleaned title:´Julio Iglesias - Discografía (1969-2015)´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/musica/DiscografiaZdeZJulioZIglesiasZ1969-2015.rar.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+91.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4165/No-More-Heroes-2-Desperate-Struggle´
+          cathegory:´juego´
+              title:´WII: No More Heroes 2 Desperate Struggle´
+      cleaned title:´Wii No More Heroes 2 Desperate Struggle´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/No-More-Heroes-2-Desperate-Struggle-[MULTI5][WII-Scrubber].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+92.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4164/This-War-of-Mine-The-Little-Ones´
+          cathegory:´juego´
+              title:´PC: This War of Mine The Little Ones´
+      cleaned title:´Pc This War Of Mine The Little Ones´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/This-War-of-Mine-The-Little-Ones-[MULTI][SKIDROW].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+93.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4163/Metal-Slug-3´
+          cathegory:´juego´
+              title:´PC: Metal Slug 3´
+      cleaned title:´Pc Metal Slug 3´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Metal-Slug-3-[MULTI7][BETA][3DM].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+94.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4162/Yu-Gi-Oh-GX-Tag-Force-3´
+          cathegory:´juego´
+              title:´PSP: Yu Gi Oh GX Tag Force 3´
+      cleaned title:´Psp Yu Gi Oh Gx Tag Force 3´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Yu-Gi-Oh-GX-Tag-Force-3-[MULTI5].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+95.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4161/Revolution-Under-Siege-Gold-Edition´
+          cathegory:´juego´
+              title:´PC: Revolution Under Siege Gold Edition´
+      cleaned title:´Pc Revolution Under Siege Gold Edition´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Revolution-Under-Siege-Gold-Edition-[MULTi5][PLAZA].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+96.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4160/Crypt-of-the-NecroDancer-Ultimate-Pack-´
+          cathegory:´juego´
+              title:´PC: Crypt of the NecroDancer Ultimate Pack ´
+      cleaned title:´Pc Crypt Of The Necrodancer Ultimate Pack´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Crypt.of.the..MULTI-PROPHET.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+97.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4159/Operator-Search-and-Rescue´
+          cathegory:´juego´
+              title:´PC: Operator Search and Rescue´
+      cleaned title:´Pc Operator Search And Rescue´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Operator.Search.and.Rescue.MULTI-SKIDROW.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+98.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4158/Castlevania-Lords-Of-Shadow-Mirror-Of-Fate-HD-´
+          cathegory:´juego´
+              title:´PC: Castlevania Lords Of Shadow Mirror Of Fate HD ´
+      cleaned title:´Pc Castlevania Lords Of Shadow Mirror Of Fate´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Castlevania-Lords-Of-Shadow-Mirror-Of-Fate-HD-[MULTI7][Repack-z10yded]-(Torrent).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+99.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4157/Dungeon-Siege-III-Collection´
+          cathegory:´juego´
+              title:´PC: Dungeon Siege III Collection´
+      cleaned title:´Pc Dungeon Siege Iii Collection´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Dungeon-Siege-III-Collection-[MULTI8][PROPHET]-(Torrent).torrent´
+            quality:´´
+             season:´´
+            episode:´´
+100.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4156/Assassins-Creeds-3-DLC´
+          cathegory:´juego´
+              title:´XBOX360: Assassins Creeds 3 DLC´
+      cleaned title:´Xbox360 Assassins Creeds 3 Dlc´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Assassins.Creeds.3.DLC.XBOX360.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+101.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4155/Spec-Ops-The-Line´
+          cathegory:´juego´
+              title:´PC: Spec Ops The Line´
+      cleaned title:´Pc Spec Ops The Line´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Spec-Ops-The-Line-[MULTI][SKIDROW].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+102.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4154/DiRT-Rally-v11´
+          cathegory:´juego´
+              title:´PC: DiRT Rally v1.1´
+      cleaned title:´Pc Dirt Rally V1.1´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/DiRT-Rally-v1.1-[MULTI][RELOADED].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+103.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4153/Dracula-4-The-Shadow-Of-The-Dragon´
+          cathegory:´juego´
+              title:´PC: Dracula 4 The Shadow Of The Dragon´
+      cleaned title:´Pc Dracula 4 The Shadow Of The Dragon´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Dracula-4-The-Shadow-Of-The-Dragon-[MULTI4][FLT].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+104.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4152/Assassins-Creed-3-Tyranny-Of-King-Washington´
+          cathegory:´juego´
+              title:´PC: Assassins Creed 3 Tyranny Of King Washington´
+      cleaned title:´Pc Assassins Creed 3 Tyranny Of King Washington´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Assassins-Creed-3-Tyranny-Of-King-Washington-[MULTI][DLC][P2P].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+105.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//juego/4151/Metal-Gear-Solid-V-Ground-Zeroes´
+          cathegory:´juego´
+              title:´PC: Metal Gear Solid V Ground Zeroes´
+      cleaned title:´Pc Metal Gear Solid V Ground Zeroes´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/juegos/Metal-Gear-Solid-V-Ground-Zeroes-[MULTI6][CODEX].torrent´
+            quality:´´
+             season:´´
+            episode:´´
+106.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2375/Mayweather-Vs-McGregor´
+          cathegory:´variado´
+              title:´Mayweather Vs McGregor.´
+      cleaned title:´Mayweather Vs Mcgregor.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Mayweather_VS_McGregor_HDTV_2017.torrent´
+            quality:´1080p´
+             season:´´
+            episode:´´
+107.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2374/Iggy-Pop-Post-Pop-Depression´
+          cathegory:´variado´
+              title:´Iggy Pop - Post Pop Depression.´
+      cleaned title:´Iggy Pop - Post Pop Depression.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Iggy_Pop_Post_Pop_Depression.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+108.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2373/Deep-Purple-California-Jam´
+          cathegory:´variado´
+              title:´Deep Purple - California Jam.´
+      cleaned title:´Deep Purple - California Jam.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Deep_Purple_California_Jam.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+109.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2372/Bob-Dylan-The-30th-Anniversary-Concert-Celebration´
+          cathegory:´variado´
+              title:´Bob Dylan - The 30th Anniversary Concert Celebration.´
+      cleaned title:´Bob Dylan - The 30th Anniversary Concert Celebration.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Bob_Dylan_The_30th_Anniversary.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+110.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2371/Asia-Symfonia-Live-In-Bulgaria´
+          cathegory:´variado´
+              title:´Asia: Symfonia - Live In Bulgaria.´
+      cleaned title:´Asia Symfonia - Live In Bulgaria.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Asia_Symphonia_Live_In_Bulgaria.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+111.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2370/Radio-Disney-Music-Videos-RDMA-2017´
+          cathegory:´variado´
+              title:´Radio Disney Music Videos (RDMA 2017).´
+      cleaned title:´Radio Disney Music Videos (rdma 2017).´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Radio_Disney_Music_Videos_RDMA_2017.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+112.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2369/Justin-Bieber-Believe´
+          cathegory:´variado´
+              title:´Justin Bieber - Believe.´
+      cleaned title:´Justin Bieber - Believe.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Justin_Bieber_Believe.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+113.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2368/Extreme-Pornograffitti-Live-25-Metal-Meltdown´
+          cathegory:´variado´
+              title:´Extreme - Pornograffitti Live 25 Metal Meltdown.´
+      cleaned title:´Extreme - Pornograffitti Live 25 Metal Meltdown.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Extreme_Pornograffitti_Live_25_Metal_Meltdown.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+114.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2367/Arcade-Fire-Reflektor-Live-At-Earls-Court´
+          cathegory:´variado´
+              title:´Arcade Fire - Reflektor Live At Earls Court.´
+      cleaned title:´Arcade Fire - Reflektor Live At Earls Court.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Arcade_Fire_Live_At_Earls_Court.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+115.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2366/Sound-Stage-Presents-Lindsey-Buckingham-With-Special-Guest-Stevie-Nicks´
+          cathegory:´variado´
+              title:´Sound Stage Presents - Lindsey Buckingham With Special Guest Stevie Nicks.´
+      cleaned title:´Sound Stage Presents - Lindsey Buckingham With Special Guest Stevie Nicks.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Sound_Stage_Presents_Lindsey_Buckingham.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+116.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2365/Westernhagen-MTV-Unplugged´
+          cathegory:´variado´
+              title:´Westernhagen - MTV Unplugged.´
+      cleaned title:´Westernhagen - Mtv Unplugged.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Westernhagen_MTV_Unplugged_2016.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+117.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2364/Ariana-Grande-FtNicki-Minaj-Side-to-Side´
+          cathegory:´variado´
+              title:´Ariana Grande (Ft.Nicki Minaj) - Side to Side.´
+      cleaned title:´Ariana Grande (ft.nicki Minaj) - Side To Side.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Ariana_Grande_Ft_Nicki_Minaj.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+118.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2363/Beyonce-Lemonade´
+          cathegory:´variado´
+              title:´Beyonce - Lemonade.´
+      cleaned title:´Beyonce - Lemonade.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Beyonce_Lemonade.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+119.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2362/Lynyrd-Skynyrd-Pronounced-Leh-Nerd-Skin-Nerd-Second-Helping-Live-From-The-Florida-Theater´
+          cathegory:´variado´
+              title:´Lynyrd Skynyrd: Pronounced Leh-Nerd Skin-Nerd &amp; Second Helping - Live From The Florida Theater.´
+      cleaned title:´Lynyrd Skynyrd Pronounced Leh-nerd Skin-nerd Second Helping - Live From The Florida Theater.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Lynyrd_Skynyrd_Pronounced.torrent´
+            quality:´´
+             season:´´
+            episode:´´
+120.---------------------------------------------------------------------
+          href link:´https://dontorrent.band//variado/2361/Alice-Cooper-Raise-The-Dead-Live-From-Wacken´
+          cathegory:´variado´
+              title:´Alice Cooper - Raise The Dead: Live From Wacken.´
+      cleaned title:´Alice Cooper - Raise The Dead Live From Wacken.´
+      torrent links:
+                    .- ´https://container765-deploy-static.cdndelta.com/torrents/variados/Alice_Cooper_Raise_The_Dead_Live_From_Wacken.torrent´
+            quality:´´
+             season:´´
+            episode:´´
