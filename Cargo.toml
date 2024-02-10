@@ -1,5 +1,5 @@
 [package]
-name = "scrape_dontorrent_domain"
+name = "create_dontorrent_rss"
 version = "0.1.0"
 edition = "2021"
 
