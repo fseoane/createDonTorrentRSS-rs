@@ -123,11 +123,42 @@ fn get_href_path(html_a_element: &String) -> String {
         end_crop_position = 0;
     };
 
-    if start_crop_position>=1 && end_crop_position>=1 && start_crop_position<end_crop_position{
+    if end_crop_position>=1{
         return String::from(&rest_of_html_a_element[..end_crop_position]);
     }else{
         return String::from("");
     };
+}
+
+fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_string: &String) -> Vec<String> {
+    let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
+
+    let torrents_page = reqwest::blocking::get(href_link.as_str())
+        .unwrap()
+        .text()
+        .unwrap();
+    let torrents_page_document = scraper::Html::parse_document(&torrents_page);
+
+    let torrents_page_selector = scraper::Selector::parse("a").unwrap();
+    let torrents_links_list = torrents_page_document
+        .select(&torrents_page_selector)
+        .filter(|item| item.inner_html() == String::from(search_for_string))
+        .map(|item_text: scraper::ElementRef| item_text.html());
+    println!("..........................................................");
+    println!("        found torrent links:");
+            
+    torrents_links_list
+        .zip(1..11)
+        .for_each(|(item, number)|{
+            let href_path = get_href_path(&item).replace("//", "https://");
+            println!("                         {}. ´{}´",&number, &href_path);
+            torrent_links.push(String::from(&href_path));
+            
+        });
+    println!("---------------------------------------------------------");
+        
+    //torrent_links.push(String::from(""));
+    return torrent_links;
 }
 
 fn get_title(html_a_element: &String) -> String {
@@ -256,7 +287,7 @@ fn capitalize_each_word (cadena: &String) -> String {
 }
 
 fn get_clean_name(title: &String) -> String {
-    let words_to_remove: [&str; 13]=[
+    let words_to_remove: [&str; 23]=[
         "- 1ª Temporada",
         "- 2ª Temporada",
         "- 3ª Temporada",
@@ -266,7 +297,17 @@ fn get_clean_name(title: &String) -> String {
         "- 7ª Temporada",
         "- 8ª Temporada",
         "- 9ª Temporada",
+        "480p",
         "720p",
+        "1080p",
+        "1440p",
+        "2160p",
+        "4320p",
+        "2K",
+        "4K",
+        "8K",
+        "DVD",
+        "BlueRay",
         "&amp;",
         "HD",
         ":"
@@ -350,12 +391,12 @@ fn main() {
     // Print out the values to `stdout`.
     println!("\nConfiguration:"); 
     println!("------------------------------------------------------------------------"); 
-    println!("host:                       {}", configdata.config.host); 
-    println!("url:                        {}", configdata.config.url);
-    println!("div_id_ultimos:             {}", configdata.config.div_id_ultimos);
-    println!("link_id_download_torrent:   {}", configdata.config.link_id_download_torrent);    
-    println!("link_text_download_torrent: {}", configdata.config.link_text_download_torrent);
-    println!("output_file:                {}", configdata.config.output_file);
+    println!("host:                       {}", &configdata.config.host); 
+    println!("url:                        {}", &configdata.config.url);
+    println!("div_id_ultimos:             {}", &configdata.config.div_id_ultimos);
+    println!("link_id_download_torrent:   {}", &configdata.config.link_id_download_torrent);    
+    println!("link_text_download_torrent: {}", &configdata.config.link_text_download_torrent);
+    println!("output_file:                {}", &configdata.config.output_file);
 
     let last_domain = get_last_dontorrent_domain("https://t.me/s/DonTorrent");
     
@@ -385,34 +426,26 @@ fn main() {
     
     println!("\nScraping last torrents from:'{}'", last_torrents_url);
 
-    let torrents = reqwest::blocking::get(last_torrents_url.as_str())
+    let links_page = reqwest::blocking::get(last_torrents_url.as_str())
         .unwrap()
         .text()
         .unwrap();
 
-    //println!("\nread:'{:#?}'", &torrents);
-
-    let document = scraper::Html::parse_document(&torrents);
+    let document = scraper::Html::parse_document(&links_page);
    
-    //println!("\nparsed:'{:#?}'", &document);
-
     let div_id_ultimos = format!("{}","a.text-primary");
-    //let div_id_ultimos = format!("{}{}{}","div.",configdata.config.div_id_ultimos.clone().trim(),">div.card>div.card-body>div>a.text-primary");
-    let torrent_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
+    let links_page_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
 
-    //let torrents = document.select(&torrent_selector).map(|item_text: scraper::ElementRef| item_text.html());
-    let torrents = document.select(&torrent_selector).map(|item_text: scraper::ElementRef| item_text.html());
+    let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
 
-    // let href_path: String;
-    // let title: String;
-    // let cathegory: String;
-
-    torrents
+    links_list
         .zip(1..121)
         .for_each(|(item, number)|{
             println!("{}. {}", number, item);
 
             let href_path = get_href_path(&item);
+            let href_link = format!("{}{}",&last_domain,&href_path);
+
             let title =  get_title(&item);
             let quality = get_quality(&title);
             let cleaned_title =  get_clean_name(&title);
@@ -425,14 +458,52 @@ fn main() {
                 episode = String::from("");
             }
 
-
-            println!("       href link:´{}´", format!("{}{}",&last_domain,&href_path));
+            println!("       href link:´{}´", &href_link);
             println!("       cathegory:´{}´", &cathegory);
             println!("           title:´{}´", &title);
             println!("   cleaned title:´{}´", &cleaned_title);
             println!("         quality:´{}´", &quality);
             println!("          season:´{}´", &season);
             println!("         episode:´{}´", &episode);
+
+            let _torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
+                                                                                &configdata.config.link_text_download_torrent);
+            
             println!("\n");
+
+
+            // let test: String = String::from("<a class=\"text-white bg-primary rounded-pill d-block shadow text-decoration-none p-1\" href=\"//container765-deploy-static.cdndelta.com/torrents/variados/Beyonce_Lemonade.torrent\" download=\"\" style=\"font-size: 20px; font-weight: 500;\">Descargar</a>");
+            // println!("\n\nTest Result:{}",get_href_path(&test));
+
+            // let start_delimiter="href=\"";
+            // let end_delimiter="\"";
+            // let start_crop_position: usize;
+            // let end_crop_position: usize;
+                
+            // if test.find(start_delimiter).is_some() {  
+            //     start_crop_position = test.find(&start_delimiter).unwrap() + start_delimiter.len();
+            // } else{
+            //     start_crop_position = 0;
+            // };
+
+            // println!("   start crop:{}",&start_crop_position);
+
+            // let rest_of_html_a_element = String::from(&test.clone()[start_crop_position..]);
+
+            // println!("   rest of test:{}",&rest_of_html_a_element);
+
+            // if rest_of_html_a_element.find(end_delimiter).is_some() {  
+            //     end_crop_position = rest_of_html_a_element.find(&end_delimiter).unwrap();
+            // }else{
+            //     end_crop_position = 0;
+            // };
+
+            // println!("   end crop:{}",&end_crop_position);
+
+            // if start_crop_position>=1 && end_crop_position>=1{
+            //     println!("\n\nTest Result 1:{}",&rest_of_html_a_element[..end_crop_position]);
+            // }else{
+            //     println!("\n\nTest Result 1:{}",String::from(""));
+            // };
         });
 }
