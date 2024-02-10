@@ -9,7 +9,6 @@ use url;
 use toml;
 use std::env;
 use regex;
-use rss::{CategoryBuilder,ItemBuilder,ChannelBuilder,EnclosureBuilder};
 use chrono::prelude::*;
 //use std::{time::Instant};
 use std::fs::File;
@@ -169,9 +168,9 @@ fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_strin
     let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
 
     let torrents_page = reqwest::blocking::get(href_link.as_str())
-        .unwrap_or(" ")
+        .unwrap_or(String::from(" "))
         .text()
-        .unwrap_or(" ");
+        .unwrap_or(String::from(" "));
     let torrents_page_document = scraper::Html::parse_document(&torrents_page);
 
     let torrents_page_selector = scraper::Selector::parse("a").unwrap();
@@ -462,9 +461,9 @@ fn main() {
     println!("\nScraping last torrents from:'{}'", last_torrents_url);
 
     let links_page = reqwest::blocking::get(last_torrents_url.as_str())
-        .unwrap_or(" ")
+        .unwrap_or(String::from(" "))
         .text()
-        .unwrap_or(" ");
+        .unwrap_or(String::from(" "));
 
     let document = scraper::Html::parse_document(&links_page);
    
