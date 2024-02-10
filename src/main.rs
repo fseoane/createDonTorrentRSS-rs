@@ -167,7 +167,7 @@ fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_strin
     let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
 
     let torrents_page = reqwest::blocking::get(href_link.as_str())
-        .unwrap_or(String::from(" "))
+        .unwrap()
         .text()
         .unwrap_or(String::from(" "));
     let torrents_page_document = scraper::Html::parse_document(&torrents_page);
@@ -460,9 +460,9 @@ fn main() {
     println!("\nScraping last torrents from:'{}'", last_torrents_url);
 
     let links_page = reqwest::blocking::get(last_torrents_url.as_str())
-        .unwrap_or(String::from(" "))
+        .unwrap()
         .text()
-        .unwrap_or(String::from(" "));
+        .unwrap(String::from(" "));
 
     let document = scraper::Html::parse_document(&links_page);
    
