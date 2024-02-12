@@ -29,6 +29,26 @@ struct Settings {
     output_file: String,
 }
 
+#[derive(Serialize,Deserialize, Debug)]
+struct RSSChannel {
+    title: String,
+	link: String,
+    description: String,
+    last_build_date: String,
+    items: Vec<RSSItem>,
+}
+
+#[derive(Serialize,Deserialize, Debug)]
+struct RSSItem {
+    title: String,
+	category: String,
+    link: String,
+    pub_date: String,
+    enclosure_url: String,
+    enclosure_length: i32,
+    enclosure_type: String,
+}
+
 fn read_config(filename: &str) -> ConfigData{
     // Read the contents of the file using a `match` block 
     // to return the `data: Ok(c)` as a `String` 
