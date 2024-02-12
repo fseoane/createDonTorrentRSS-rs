@@ -56,6 +56,48 @@ struct RSSItem {
     enclosure_type: String,
 }
 
+impl RSSRoot{
+    fn write_to_file(&self,file_name: &str){
+        println!("hola caracola");
+        // Create a new file for writing
+        let mut rss_file = std::fs::File::create(file_name).expect("rss file could not be created");
+        
+        // Write rss root
+        rss_file.write(format!("<rss version=\"{}\">\n",&self.version).as_bytes()).expect("rss file write failed");
+
+        // Write rss channel
+        for channel in &self.channels{
+            rss_file.write(b"<channel>\n").expect("rss file write failed");
+            rss_file.write(format!("<title>{}</title>\n",channel.title).as_bytes()).expect("rss file write failed");
+            rss_file.write(format!("<link>{}</link>\n",channel.link).as_bytes()).expect("rss file write failed");
+            rss_file.write(format!("<description>{}</description>\n",channel.description).as_bytes()).expect("rss file write failed");
+            rss_file.write(format!("<lastBuildDate>{}</lastBuildDate>\n",channel.last_build_date).as_bytes()).expect("rss file write failed");
+
+            // Write rss channel items
+            for item in &channel.items{
+                rss_file.write(b"<item>\n").expect("rss file write failed");
+                rss_file.write(format!("<title>{}</title>\n",item.title).as_bytes()).expect("rss file write failed");
+                
+                rss_file.write(format!("<category>{}</category>\n",item.category).as_bytes()).expect("rss file write failed");
+                rss_file.write(format!("<link>{}</link>\n",item.link).as_bytes()).expect("rss file write failed");
+
+                rss_file.write(format!("<quality>{}</quality>\n",item.quality).as_bytes()).expect("rss file write failed");
+
+                
+                rss_file.write(format!("<pubDate>{}</pubDate>\n",item.pub_date).as_bytes()).expect("rss file write failed");
+                rss_file.write(format!("<enclosure url=\"{}\" length=\"{}\" type=\"{}\"/>\n",item.enclosure_url,item.enclosure_length,item.enclosure_type).as_bytes()).expect("rss file write failed");
+                rss_file.write(b"</item>\n").expect("rss file write failed");
+            }
+            // Write rss channel closure
+            rss_file.write(b"</channel>\n").expect("rss file write failed");
+
+        }
+        // Write rss root closure
+        rss_file.write(b"</rss>\n").expect("rss file write failed");
+        rss_file.flush().expect("rss file flush failed");
+    }
+}
+
 fn read_config(filename: &str) -> ConfigData{
     // Read the contents of the file using a `match` block 
     // to return the `data: Ok(c)` as a `String` 
@@ -406,8 +448,8 @@ fn get_clean_name(title: &String) -> String {
 
 fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
 
-    let mut rootRSS: RSSRoot;
-    let mut channelRSS: RSSChannel;
+    let mut root_rss: RSSRoot;
+    let mut channel_rss: RSSChannel;
     let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
 
     let url_path = configdata.config.website_path.clone();
@@ -430,12 +472,12 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
     let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
     
     // Write some data to the file
-    rootRSS = RSSRoot{
+    root_rss = RSSRoot{
         version:String::from("2.0"),
         channels:Vec::new(),
     };
     
-    channelRSS = RSSChannel{
+    channel_rss = RSSChannel{
         title:String::from("DonTorrent RSS"),
         link:String::from("https://20.12.69.250"),
         description:String::from("DonTorrent - ultimos torrents publicados"),
@@ -443,8 +485,6 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
         items: Vec::new(),
     };
 
-
-    
     links_list
         .zip(1..121)
         .for_each(|(item, number)|{
@@ -483,8 +523,7 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
                         
                         println!("                    .- ´{}´",&torr_item);
 
-                        let mut itemRSS: RSSItem;
-                        itemRSS = RSSItem{
+                        let mut item_rss: RSSItem = RSSItem{
                             title: format!("{} {}x{}",&cleaned_title,&season,&episode),
                             category: String::from(&cathegory),
                             link: String::from(&href_link),
@@ -495,13 +534,13 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
                             enclosure_type:String::from("application/x-bittorrent"),
                         };
                         if season.len()>0 && episode.len()>0 {
-                            itemRSS.title=String::from(&cleaned_title);
+                            item_rss.title=String::from(&cleaned_title);
                         };
                         torr_quality = get_quality(&torr_item);
                         if torr_quality.len()>0{
-                            itemRSS.quality=String::from(&torr_quality);
+                            item_rss.quality=String::from(&torr_quality);
                         };
-                        channelRSS.items.push(itemRSS);
+                        channel_rss.items.push(item_rss);
                     }
                 });  
             println!("            quality:´{}´", &torr_quality);
@@ -509,13 +548,13 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
             println!("            episode:´{}´", &episode);    
     });
 
-    rootRSS.channels.push(channelRSS);
-    return rootRSS;
+    root_rss.channels.push(channel_rss);
+    return root_rss;
 
 }
 
 
-fn main() {
+fn main2() {
     // IMPORTANT:
     // ==========
     // To be able to compile in Alpine Linux in arm64, 
@@ -706,5 +745,90 @@ fn main() {
     // Flush the writer to ensure all data is written to disk
     rss_file.flush().expect("rss file flush failed");
 
+
+}
+
+
+fn main() {
+    // IMPORTANT:
+    // ==========
+    // To be able to compile in Alpine Linux in arm64, 
+    // 1.) install these packages in the Alpine:
+    //         sudo apk add pkgconfig
+    //         sudo apk add gcc musl-dev openssl openssl-dev
+    // 2.) and add to Cargo.toml the following dependency:
+    //         git2 = {version="0.13.22", features = ["vendored-libgit2"]}
+    // 3.) and compile passing the -Ctarget-features=-crt-static argument like:
+    //         RUSTFLAGS="-Ctarget-feature=-crt-static" cargo build
+    // because rust only links to static libraries when building a static binary, 
+    // which is the default for the musl target
+    // but to build a dynamic binary which can link to dynamic libraries, 
+    // you need to use RUSTFLAGS="-Ctarget-feature=-crt-static".
+
+    let args: Vec<String> = env::args().collect();
+
+    let mut option: &str = "";
+    let mut parameter: &str  = "";
+    let config_option: &str = "-c";
+    let filename: &str;
+    
+    if args.len()>1{
+        option = &args[1];
+    };
+    if args.len()>2{
+        parameter = &args[2];
+    } ;
+    if args.len()>2 && option.eq(config_option){
+        filename = parameter;
+    } else {
+        filename = "createDonTorrentRSS.conf";
+    };
+    let configdata: ConfigData = read_config(filename);
+
+    let previous_domain = configdata.config.website_url.clone();
+ 
+    let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
+    println!("\nRun time     : {}",now_date_time);
+
+    // Print out the values to `stdout`.
+    println!("\nConfiguration:"); 
+    println!("------------------------------------------------------------------------"); 
+    println!("telegram_url:               {}", &configdata.config.telegram_url); 
+    println!("website_url:                {}", &configdata.config.website_url); 
+    println!("website_path:               {}", &configdata.config.website_path);
+    println!("div_id_ultimos:             {}", &configdata.config.div_id_ultimos);
+    println!("link_id_download_torrent:   {}", &configdata.config.link_id_download_torrent);    
+    println!("link_text_download_torrent: {}", &configdata.config.link_text_download_torrent);
+    println!("output_file:                {}", &configdata.config.output_file);
+
+    let last_domain = get_last_dontorrent_domain(&configdata.config.telegram_url);
+    
+    println!("\nPrevious domain:'{}'", previous_domain);
+    println!("Last domain:'{}'", last_domain);
+
+    let mut newconfigdata: ConfigData;
+
+    if previous_domain.ne(&last_domain){
+        let newsettings: Settings = Settings{
+            telegram_url:configdata.config.telegram_url,
+            website_url:last_domain.clone(),
+            website_path:configdata.config.website_path.clone(),
+            div_id_ultimos: configdata.config.div_id_ultimos.clone(),
+            link_id_download_torrent:configdata.config.link_id_download_torrent.clone(),
+            link_text_download_torrent:configdata.config.link_text_download_torrent.clone(),
+            output_file:configdata.config.output_file.clone(),
+        };
+
+        newconfigdata = ConfigData{
+            config: newsettings,
+        };
+        write_config(filename,&newconfigdata);
+    } else{
+        newconfigdata = configdata;
+    };
+
+    let root_rss = get_latest_torrents(&newconfigdata);
+
+    root_rss.write_to_file(&newconfigdata.config.output_file);
 
 }
