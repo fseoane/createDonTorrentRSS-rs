@@ -30,6 +30,12 @@ struct Settings {
 }
 
 #[derive(Serialize,Deserialize, Debug)]
+struct RSSRoot {
+    version:String,
+    channels: Vec<RSSChannel>,
+}
+
+#[derive(Serialize,Deserialize, Debug)]
 struct RSSChannel {
     title: String,
 	link: String,
@@ -43,6 +49,7 @@ struct RSSItem {
     title: String,
 	category: String,
     link: String,
+    quality: String,
     pub_date: String,
     enclosure_url: String,
     enclosure_length: i32,
@@ -395,6 +402,116 @@ fn get_clean_name(title: &String) -> String {
 
     return String::from(capitalize_each_word(&cleaned_title));
     
+}
+
+fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
+
+    let mut rootRSS: RSSRoot;
+    let mut channelRSS: RSSChannel;
+    let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
+
+    let url_path = configdata.config.website_path.clone();
+    let last_torrents_url = format!("{}/{}",configdata.config.website_url,url_path)
+        .replace("//", "/")
+        .replace(":/", "://");
+    
+    println!("\nScraping last torrents from:'{}'", last_torrents_url);
+
+    let links_page = reqwest::blocking::get(last_torrents_url.as_str())
+        .unwrap()
+        .text()
+        .unwrap_or(String::from(" "));
+
+    let document = scraper::Html::parse_document(&links_page);
+   
+    let div_id_ultimos = format!("{}","a.text-primary");
+    let links_page_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
+
+    let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
+    
+    // Write some data to the file
+    rootRSS = RSSRoot{
+        version:String::from("2.0"),
+        channels:Vec::new(),
+    };
+    
+    channelRSS = RSSChannel{
+        title:String::from("DonTorrent RSS"),
+        link:String::from("https://20.12.69.250"),
+        description:String::from("DonTorrent - ultimos torrents publicados"),
+        last_build_date:String::from(&now_date_time),
+        items: Vec::new(),
+    };
+
+
+    
+    links_list
+        .zip(1..121)
+        .for_each(|(item, number)|{
+            println!("{}.---------------------------------------------------------------------", number);
+
+            let href_path = get_href_path(&item);
+            let href_link = format!("{}{}",&configdata.config.website_url,&href_path);
+
+            let title =  get_title(&item);
+            let quality = get_quality(&title);
+            let cleaned_title =  get_clean_name(&title);
+            let cathegory = get_cathegory(&href_path);
+            let season = get_season(&title);
+            let episode: String ;
+
+            if season.len()>0{
+                episode = get_episode(&title);
+            } else {
+                episode = String::from("");
+            }
+
+            println!("          href link:´{}´", &href_link);
+            println!("          cathegory:´{}´", &cathegory);
+            println!("              title:´{}´", &title);
+            println!("      cleaned title:´{}´", &cleaned_title);
+            println!("      torrent links:");
+
+            let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
+                                                                                &configdata.config.link_text_download_torrent);
+
+            let mut torr_quality: String = String::from("");
+            let torrents_list = torrent_download_links.iter();
+            torrents_list
+                .for_each(|torr_item|{
+                    if episode.len()==0 || episode.len()>0 && (get_episode(&torr_item).eq(&episode)){
+                        
+                        println!("                    .- ´{}´",&torr_item);
+
+                        let mut itemRSS: RSSItem;
+                        itemRSS = RSSItem{
+                            title: format!("{} {}x{}",&cleaned_title,&season,&episode),
+                            category: String::from(&cathegory),
+                            link: String::from(&href_link),
+                            quality: String::from(&quality),
+                            pub_date: String::from(&now_date_time),
+                            enclosure_url: String::from(&torr_item.clone()),
+                            enclosure_length: 201269,
+                            enclosure_type:String::from("application/x-bittorrent"),
+                        };
+                        if season.len()>0 && episode.len()>0 {
+                            itemRSS.title=String::from(&cleaned_title);
+                        };
+                        torr_quality = get_quality(&torr_item);
+                        if torr_quality.len()>0{
+                            itemRSS.quality=String::from(&torr_quality);
+                        };
+                        channelRSS.items.push(itemRSS);
+                    }
+                });  
+            println!("            quality:´{}´", &torr_quality);
+            println!("             season:´{}´", &season);
+            println!("            episode:´{}´", &episode);    
+    });
+
+    rootRSS.channels.push(channelRSS);
+    return rootRSS;
+
 }
 
 
