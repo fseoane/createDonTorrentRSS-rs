@@ -34,6 +34,46 @@ struct RSSRoot {
     version:String,
     channels: Vec<RSSChannel>,
 }
+    impl RSSRoot{
+        fn write_to_file(&self,file_name: &str){
+            println!("Writing to: ´{}´",file_name);
+            // Create a new file for writing
+            let mut rss_file = std::fs::File::create(file_name).expect("rss file could not be created");
+            
+            // Write rss root
+            rss_file.write(format!("<rss version=\"{}\">\n",&self.version).as_bytes()).expect("rss file write failed");
+
+            // Write rss channel
+            for channel in &self.channels{
+                rss_file.write(b"<channel>\n").expect("rss file write failed");
+                rss_file.write(format!("<title>{}</title>\n",channel.title).as_bytes()).expect("rss file write failed");
+                rss_file.write(format!("<link>{}</link>\n",channel.link).as_bytes()).expect("rss file write failed");
+                rss_file.write(format!("<description>{}</description>\n",channel.description).as_bytes()).expect("rss file write failed");
+                rss_file.write(format!("<lastBuildDate>{}</lastBuildDate>\n",channel.last_build_date).as_bytes()).expect("rss file write failed");
+
+                // Write rss channel items
+                for item in &channel.items{
+                    rss_file.write(b"<item>\n").expect("rss file write failed");
+                    rss_file.write(format!("<title>{}</title>\n",item.title).as_bytes()).expect("rss file write failed");
+                    rss_file.write(format!("<category>{}</category>\n",item.category).as_bytes()).expect("rss file write failed");                    
+                    rss_file.write(format!("<season>{}</season>\n",item.season).as_bytes()).expect("rss file write failed");
+                    rss_file.write(format!("<episode>{}</episode>\n",item.episode).as_bytes()).expect("rss file write failed");
+                    rss_file.write(format!("<link>{}</link>\n",item.link).as_bytes()).expect("rss file write failed");
+                    rss_file.write(format!("<quality>{}</quality>\n",item.quality).as_bytes()).expect("rss file write failed");
+                    rss_file.write(format!("<pubDate>{}</pubDate>\n",item.pub_date).as_bytes()).expect("rss file write failed");
+                    rss_file.write(format!("<enclosure url=\"{}\" length=\"{}\" type=\"{}\"/>\n",item.enclosure_url,item.enclosure_length,item.enclosure_type).as_bytes()).expect("rss file write failed");
+                    rss_file.write(b"</item>\n").expect("rss file write failed");
+                }
+                // Write rss channel closure
+                rss_file.write(b"</channel>\n").expect("rss file write failed");
+
+            }
+            // Write rss root closure
+            rss_file.write(b"</rss>\n").expect("rss file write failed");
+            rss_file.flush().expect("rss file flush failed");
+        }
+    }
+
 
 #[derive(Serialize,Deserialize, Debug)]
 struct RSSChannel {
@@ -48,6 +88,8 @@ struct RSSChannel {
 struct RSSItem {
     title: String,
 	category: String,
+    season: String,
+    episode: String,
     link: String,
     quality: String,
     pub_date: String,
@@ -56,47 +98,7 @@ struct RSSItem {
     enclosure_type: String,
 }
 
-impl RSSRoot{
-    fn write_to_file(&self,file_name: &str){
-        println!("hola caracola");
-        // Create a new file for writing
-        let mut rss_file = std::fs::File::create(file_name).expect("rss file could not be created");
-        
-        // Write rss root
-        rss_file.write(format!("<rss version=\"{}\">\n",&self.version).as_bytes()).expect("rss file write failed");
 
-        // Write rss channel
-        for channel in &self.channels{
-            rss_file.write(b"<channel>\n").expect("rss file write failed");
-            rss_file.write(format!("<title>{}</title>\n",channel.title).as_bytes()).expect("rss file write failed");
-            rss_file.write(format!("<link>{}</link>\n",channel.link).as_bytes()).expect("rss file write failed");
-            rss_file.write(format!("<description>{}</description>\n",channel.description).as_bytes()).expect("rss file write failed");
-            rss_file.write(format!("<lastBuildDate>{}</lastBuildDate>\n",channel.last_build_date).as_bytes()).expect("rss file write failed");
-
-            // Write rss channel items
-            for item in &channel.items{
-                rss_file.write(b"<item>\n").expect("rss file write failed");
-                rss_file.write(format!("<title>{}</title>\n",item.title).as_bytes()).expect("rss file write failed");
-                
-                rss_file.write(format!("<category>{}</category>\n",item.category).as_bytes()).expect("rss file write failed");
-                rss_file.write(format!("<link>{}</link>\n",item.link).as_bytes()).expect("rss file write failed");
-
-                rss_file.write(format!("<quality>{}</quality>\n",item.quality).as_bytes()).expect("rss file write failed");
-
-                
-                rss_file.write(format!("<pubDate>{}</pubDate>\n",item.pub_date).as_bytes()).expect("rss file write failed");
-                rss_file.write(format!("<enclosure url=\"{}\" length=\"{}\" type=\"{}\"/>\n",item.enclosure_url,item.enclosure_length,item.enclosure_type).as_bytes()).expect("rss file write failed");
-                rss_file.write(b"</item>\n").expect("rss file write failed");
-            }
-            // Write rss channel closure
-            rss_file.write(b"</channel>\n").expect("rss file write failed");
-
-        }
-        // Write rss root closure
-        rss_file.write(b"</rss>\n").expect("rss file write failed");
-        rss_file.flush().expect("rss file flush failed");
-    }
-}
 
 fn read_config(filename: &str) -> ConfigData{
     // Read the contents of the file using a `match` block 
@@ -233,31 +235,6 @@ fn get_href_path(html_a_element: &String) -> String {
     };
 }
 
-fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_string: &String) -> Vec<String> {
-    let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
-
-    let torrents_page = reqwest::blocking::get(href_link.as_str())
-        .unwrap()
-        .text()
-        .unwrap_or(String::from(" "));
-    let torrents_page_document = scraper::Html::parse_document(&torrents_page);
-
-    let torrents_page_selector = scraper::Selector::parse("a").unwrap();
-    let torrents_links_list = torrents_page_document
-        .select(&torrents_page_selector)
-        .filter(|item| item.inner_html() == String::from(search_for_string))
-        .map(|item_text: scraper::ElementRef| item_text.html());
-            
-    torrents_links_list
-        .zip(1..11)
-        .for_each(|(item, _number)|{
-            let href_path = get_href_path(&item).replace("//", "https://");
-            torrent_links.push(String::from(&href_path));
-        });
-        
-    return torrent_links;
-}
-
 fn get_title(html_a_element: &String) -> String {
     //<a class="text-primary" href="documental/4263/4264/Frmula-1-La-emocin-de-un-Grand-Prix">Fórmula 1: La emoción de un Grand Prix: 2x09 &amp; 2x10</a>
     let start_delimiter="\">";
@@ -318,12 +295,15 @@ fn get_cathegory(href_path: &String) -> String {
 
 fn get_season(title: &String) -> String {
     let re = regex::Regex::new(r"(?ix)
-                                            (?:\s|s|season)
-                                            (\d+)
-                                            (?:e|x|episode|\n)
+                                            (?:\s|s|season|temporada|temporada-)
+                                            (\d+)([\S.]*)
+                                            (?:e|x|episode|cap|cap-|\n)
                                             (\d{2})             
                                             ").unwrap();
-    if let Some(captures) = re.captures(title) {
+    // let re = regex::Regex::new(r"(?ix)(?:\s|s|season|temporada-)
+    //                                         (\d+)          
+    //                                         ").unwrap();
+    if let Some(captures) = re.captures(&title.to_lowercase()) {
         return String::from(captures.get(1).unwrap().as_str());
     } else {
         return String::from("");
@@ -333,12 +313,12 @@ fn get_season(title: &String) -> String {
 fn get_episode(title: &String) -> String {
     let re = regex::Regex::new(r"(?ix)                 
                             (?:                 
-                            e|x|cap-|episode    
+                            e|x|cap|cap-|episode    
                             )                    
                             \s*                 
                             (\d{2})             
                             ").unwrap();
-    if let Some(captures) = re.captures(title) {
+    if let Some(captures) = re.captures(&title.to_lowercase()) {
         return String::from(captures.get(1).unwrap().as_str());
     } else {
         return String::from("");
@@ -384,7 +364,7 @@ fn capitalize_each_word (a_string: &String) -> String {
 }
 
 fn get_clean_name(title: &String) -> String {
-    let words_to_remove: [&str; 23]=[
+    let words_to_remove: [&str; 25]=[
         "- 1ª Temporada",
         "- 2ª Temporada",
         "- 3ª Temporada",
@@ -407,6 +387,8 @@ fn get_clean_name(title: &String) -> String {
         "BlueRay",
         "&amp;",
         "HD",
+        "AC3 5.1",
+        "AC3-5-1",
         ":"
     ];
     let mut cleaned_title: String=title.clone().to_lowercase();
@@ -444,6 +426,31 @@ fn get_clean_name(title: &String) -> String {
 
     return String::from(capitalize_each_word(&cleaned_title));
     
+}
+
+fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_string: &String) -> Vec<String> {
+    let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
+
+    let torrents_page = reqwest::blocking::get(href_link.as_str())
+        .unwrap()
+        .text()
+        .unwrap_or(String::from(" "));
+    let torrents_page_document = scraper::Html::parse_document(&torrents_page);
+
+    let torrents_page_selector = scraper::Selector::parse("a").unwrap();
+    let torrents_links_list = torrents_page_document
+        .select(&torrents_page_selector)
+        .filter(|item| item.inner_html() == String::from(search_for_string))
+        .map(|item_text: scraper::ElementRef| item_text.html());
+            
+    torrents_links_list
+        .zip(1..100)
+        .for_each(|(item, _number)|{
+            let href_path = get_href_path(&item).replace("//", "https://");
+            torrent_links.push(String::from(&href_path));
+        });
+        
+    return torrent_links;
 }
 
 fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
@@ -519,13 +526,20 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
             let torrents_list = torrent_download_links.iter();
             torrents_list
                 .for_each(|torr_item|{
-                    if episode.len()==0 || episode.len()>0 && (get_episode(&torr_item).eq(&episode)){
+                    // if  episode.len()==0 || 
+                    //     (episode.len()>0 && get_episode(&torr_item).eq(&episode)) || 
+                    //     (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
+                    if  (episode.len()==0 && season.len()==0) ||
+                        (episode.len()>0 && season.len()>0 && get_season(&torr_item).len()==0 && get_episode(&torr_item).eq(&episode)) ||
+                        (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
                         
-                        println!("                    .- ´{}´",&torr_item);
+                            println!("                    .- ´{}´  ({}x{})",&torr_item,get_season(&torr_item),get_episode(&torr_item));
 
                         let mut item_rss: RSSItem = RSSItem{
-                            title: format!("{} {}x{}",&cleaned_title,&season,&episode),
+                            title: String::from(&cleaned_title),
                             category: String::from(&cathegory),
+                            season: String::from(""),
+                            episode: String::from(""),
                             link: String::from(&href_link),
                             quality: String::from(&quality),
                             pub_date: String::from(&now_date_time),
@@ -533,15 +547,21 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
                             enclosure_length: 201269,
                             enclosure_type:String::from("application/x-bittorrent"),
                         };
+
                         if season.len()>0 && episode.len()>0 {
-                            item_rss.title=String::from(&cleaned_title);
+                            item_rss.title=format!("{} {}x{}",&cleaned_title,&season,&episode);
+                            item_rss.season = String::from(&season);
+                            item_rss.episode = String::from(&episode);
                         };
+
                         torr_quality = get_quality(&torr_item);
                         if torr_quality.len()>0{
                             item_rss.quality=String::from(&torr_quality);
                         };
+
                         channel_rss.items.push(item_rss);
-                    }
+                    };
+
                 });  
             println!("            quality:´{}´", &torr_quality);
             println!("             season:´{}´", &season);
@@ -552,202 +572,6 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
     return root_rss;
 
 }
-
-
-fn main2() {
-    // IMPORTANT:
-    // ==========
-    // To be able to compile in Alpine Linux in arm64, 
-    // 1.) install these packages in the Alpine:
-    //         sudo apk add pkgconfig
-    //         sudo apk add gcc musl-dev openssl openssl-dev
-    // 2.) and add to Cargo.toml the following dependency:
-    //         git2 = {version="0.13.22", features = ["vendored-libgit2"]}
-    // 3.) and compile passing the -Ctarget-features=-crt-static argument like:
-    //         RUSTFLAGS="-Ctarget-feature=-crt-static" cargo build
-    // because rust only links to static libraries when building a static binary, 
-    // which is the default for the musl target
-    // but to build a dynamic binary which can link to dynamic libraries, 
-    // you need to use RUSTFLAGS="-Ctarget-feature=-crt-static".
-
-    let args: Vec<String> = env::args().collect();
-
-    let mut option: &str = "";
-    let mut parameter: &str  = "";
-    let config_option: &str = "-c";
-    let filename: &str;
-    
-    if args.len()>1{
-        option = &args[1];
-    };
-    if args.len()>2{
-        parameter = &args[2];
-    } ;
-    if args.len()>2 && option.eq(config_option){
-        filename = parameter;
-    } else {
-        filename = "createDonTorrentRSS.conf";
-    };
-    let configdata: ConfigData = read_config(filename);
-
-    let previous_domain = configdata.config.website_url.clone();
- 
-    let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
-    println!("\nRun time     : {}",now_date_time);
-
-    // Print out the values to `stdout`.
-    println!("\nConfiguration:"); 
-    println!("------------------------------------------------------------------------"); 
-    println!("telegram_url:               {}", &configdata.config.telegram_url); 
-    println!("website_url:                {}", &configdata.config.website_url); 
-    println!("website_path:               {}", &configdata.config.website_path);
-    println!("div_id_ultimos:             {}", &configdata.config.div_id_ultimos);
-    println!("link_id_download_torrent:   {}", &configdata.config.link_id_download_torrent);    
-    println!("link_text_download_torrent: {}", &configdata.config.link_text_download_torrent);
-    println!("output_file:                {}", &configdata.config.output_file);
-
-    let last_domain = get_last_dontorrent_domain(&configdata.config.telegram_url);
-    
-    println!("\nPrevious domain:'{}'", previous_domain);
-    println!("Last domain:'{}'", last_domain);
-    
-    if previous_domain.ne(&last_domain){
-        let newsettings: Settings = Settings{
-            telegram_url:configdata.config.telegram_url,
-            website_url:last_domain.clone(),
-            website_path:configdata.config.website_path.clone(),
-            div_id_ultimos: configdata.config.div_id_ultimos.clone(),
-            link_id_download_torrent:configdata.config.link_id_download_torrent.clone(),
-            link_text_download_torrent:configdata.config.link_text_download_torrent.clone(),
-            output_file:configdata.config.output_file.clone(),
-        };
-
-        let newconfigdata: ConfigData = ConfigData{
-            config: newsettings,
-        };
-        write_config(filename,&newconfigdata);
-    };
-
-    let url_path = configdata.config.website_path.clone();
-    let last_torrents_url = format!("{}/{}",last_domain,url_path)
-        .replace("//", "/")
-        .replace(":/", "://");
-    
-    println!("\nScraping last torrents from:'{}'", last_torrents_url);
-
-    let links_page = reqwest::blocking::get(last_torrents_url.as_str())
-        .unwrap()
-        .text()
-        .unwrap_or(String::from(" "));
-
-    let document = scraper::Html::parse_document(&links_page);
-   
-    let div_id_ultimos = format!("{}","a.text-primary");
-    let links_page_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
-
-    let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
-    
-    // Create a new file for writing
-    let mut rss_file = std::fs::File::create(&configdata.config.output_file).expect("rss file could not be created");
-    //let mut rss_file = std::fs::File::create("output.xml").expect("rss file could not be created");
-    
-    // Write some data to the file
-    rss_file.write(b"<rss version=\"2.0\">\n").expect("rss file write failed");
-    rss_file.write(b"<channel>\n").expect("rss file write failed");
-    rss_file.write(b"<title>DonTorrent RSS</title>\n").expect("rss file write failed");
-    rss_file.write(b"<link>https://20.12.69.250</link>\n").expect("rss file write failed");
-    rss_file.write(b"<description>DonTorrent - ultimos torrents publicados</description>\n").expect("rss file write failed");
-    rss_file.write(b"<lastBuildDate>").expect("rss file write failed");
-    rss_file.write(&now_date_time.as_bytes()).expect("rss file write failed");
-    rss_file.write(b"</lastBuildDate>\n").expect("rss file write failed");
-    
-    links_list
-        .zip(1..121)
-        .for_each(|(item, number)|{
-            println!("{}.---------------------------------------------------------------------", number);
-
-            let href_path = get_href_path(&item);
-            let href_link = format!("{}{}",&last_domain,&href_path);
-
-            let title =  get_title(&item);
-            let quality = get_quality(&title);
-            let cleaned_title =  get_clean_name(&title);
-            let cathegory = get_cathegory(&href_path);
-            let season = get_season(&title);
-            let episode: String ;
-            if season.len()>0{
-                episode = get_episode(&title);
-            } else {
-                episode = String::from("");
-            }
-            println!("          href link:´{}´", &href_link);
-            println!("          cathegory:´{}´", &cathegory);
-            println!("              title:´{}´", &title);
-            println!("      cleaned title:´{}´", &cleaned_title);
-            println!("      torrent links:");
-
-            let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
-                                                                                &configdata.config.link_text_download_torrent);
-            
-            let mut torr_quality: String = String::from("");
-            let torrents_list = torrent_download_links.iter();
-            torrents_list
-                .for_each(|torr_item|{
-                    if episode.len()==0 || episode.len()>0 && (get_episode(&torr_item).eq(&episode)){
-                        println!("                    .- ´{}´",&torr_item);
-            
-                        rss_file.write(b"<item>\n").expect("rss file write failed");
-                        if season.len()>0 && episode.len()>0 {
-                            rss_file.write(b"<title>").expect("rss file write failed");
-                            rss_file.write(format!("{} {}x{}",&cleaned_title,&season,&episode).as_bytes()).expect("rss file write failed");
-                            rss_file.write(b"</title>\n").expect("rss file write failed");
-                        } else {
-                            rss_file.write(b"<title>").expect("rss file write failed");
-                            rss_file.write(&cleaned_title.as_bytes()).expect("rss file write failed");
-                            rss_file.write(b"</title>\n").expect("rss file write failed");
-                        }
-                        rss_file.write(b"<category>").expect("rss file write failed");
-                        rss_file.write(&cathegory.as_bytes()).expect("rss file write failed");
-                        rss_file.write(b"</category>\n").expect("rss file write failed");
-                        rss_file.write(b"<link>").expect("rss file write failed");
-                        rss_file.write(&href_link.as_bytes()).expect("rss file write failed");
-                        rss_file.write(b"</link>\n").expect("rss file write failed");
-                        
-                        torr_quality = get_quality(&torr_item);
-                        if torr_quality.len()>0{
-                            rss_file.write(b"<quality>").expect("rss file write failed");
-                            rss_file.write(&torr_quality.as_bytes()).expect("rss file write failed");
-                            rss_file.write(b"</quality>\n").expect("rss file write failed");
-                        } else {
-                            torr_quality = quality.clone();
-                            rss_file.write(b"<quality>").expect("rss file write failed");
-                            rss_file.write(&quality.as_bytes()).expect("rss file write failed");
-                            rss_file.write(b"</quality>\n").expect("rss file write failed");
-                        };
-                        rss_file.write(b"<pubDate>").expect("rss file write failed");
-                        rss_file.write(&now_date_time.as_bytes()).expect("rss file write failed");
-                        rss_file.write(b"</pubDate>").expect("rss file write failed");
-                        rss_file.write(b"<enclosure url=\"").expect("rss file write failed");
-                        rss_file.write(&torr_item.as_bytes()).expect("rss file write failed");
-                        rss_file.write(b"\" length=\"201269\" type=\"application/x-bittorrent\"/>\n").expect("rss file write failed");
-                        rss_file.write(b"</item>\n").expect("rss file write failed");
-                    }
-                });  
-            println!("            quality:´{}´", &torr_quality);
-            println!("             season:´{}´", &season);
-            println!("            episode:´{}´", &episode);    
-    });
-
-    // close channel and rss sections 
-    rss_file.write(b"</channel>\n").expect("rss file write failed");
-    rss_file.write(b"</rss>\n").expect("rss file write failed");
-   
-    // Flush the writer to ensure all data is written to disk
-    rss_file.flush().expect("rss file flush failed");
-
-
-}
-
 
 fn main() {
     // IMPORTANT:
@@ -828,7 +652,6 @@ fn main() {
     };
 
     let root_rss = get_latest_torrents(&newconfigdata);
-
     root_rss.write_to_file(&newconfigdata.config.output_file);
 
 }
