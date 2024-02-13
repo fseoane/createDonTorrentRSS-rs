@@ -36,7 +36,7 @@ struct RSSRoot {
 }
     impl RSSRoot{
         fn write_to_file(&self,file_name: &str){
-            println!("Writing to: ´{}´",file_name);
+            println!("\nWriting to: ´{}´",file_name);
             // Create a new file for writing
             let mut rss_file = std::fs::File::create(file_name).expect("rss file could not be created");
             
@@ -512,7 +512,7 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
 
             if item.find("href=\"").is_some(){
 
-                println!("{}.---------------------------------------------------------------------", number);
+                println!("   {}............................................................................", number);
 
                 let href_path = get_href_path(&item);
                 let href_link = format!("{}{}",&configdata.config.website_url,&href_path);
