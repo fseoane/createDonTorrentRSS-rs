@@ -10,8 +10,8 @@ use toml;
 use std::env;
 use regex;
 use chrono::prelude::*;
-use std::fs::File;
-use std::io::prelude::*;
+// use std::fs::File;
+// use std::io::prelude::*;
 
 
 #[derive(Serialize,Deserialize, Debug)]
@@ -325,6 +325,15 @@ fn get_episode(title: &String) -> String {
     }
 }
 
+fn get_pub_date(date_yyyy_mm_dd: &String) -> String {
+    let re = regex::Regex::new(r"(?ix)(\d{4})-(\d{2})-(\d{2})").unwrap();
+    if let Some(captures) = re.captures(&date_yyyy_mm_dd) {
+        return String::from(captures.get(0).unwrap().as_str());
+    } else {
+        return String::from("");
+    }
+}
+
 fn get_quality(title: &String) -> String {
     if title.find("480p").is_some() {
         return String::from("480p");
@@ -428,7 +437,7 @@ fn get_clean_name(title: &String) -> String {
     
 }
 
-fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_string: &String) -> Vec<String> {
+fn scrape_download_page_and_get_torrent_link(href_link: &String,element_id: &String, search_for_string: &String) -> Vec<String> {
     let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
 
     let torrents_page = reqwest::blocking::get(href_link.as_str())
@@ -436,8 +445,8 @@ fn scrape_download_page_and_get_torrent_link(href_link: &String,search_for_strin
         .text()
         .unwrap_or(String::from(" "));
     let torrents_page_document = scraper::Html::parse_document(&torrents_page);
-
-    let torrents_page_selector = scraper::Selector::parse("a").unwrap();
+    let a_element_id = format!("a#{}",element_id);    // use the # to specify the id attribute of an html element
+    let torrents_page_selector = scraper::Selector::parse(&a_element_id).unwrap();
     let torrents_links_list = torrents_page_document
         .select(&torrents_page_selector)
         .filter(|item| item.inner_html() == String::from(search_for_string))
@@ -459,8 +468,8 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
     let mut channel_rss: RSSChannel;
     let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
 
-    let url_path = configdata.config.website_path.clone();
-    let last_torrents_url = format!("{}/{}",configdata.config.website_url,url_path)
+    //let url_path = configdata.config.website_path.clone();
+    let last_torrents_url = format!("{}/{}",configdata.config.website_url,configdata.config.website_path)
         .replace("//", "/")
         .replace(":/", "://");
     
@@ -473,11 +482,16 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
 
     let document = scraper::Html::parse_document(&links_page);
    
-    let div_id_ultimos = format!("{}","a.text-primary");
+    //let div_id_ultimos = format!("{}","div.seccion > * > * > * > a.text-primary");
+    let div_id_ultimos = format!("{}",configdata.config.div_id_ultimos);
     let links_page_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
 
-    let links_list = document.select(&links_page_selector).map(|item_text: scraper::ElementRef| item_text.html());
-    
+    let links_list = document
+        .select(&links_page_selector)
+        .map(|item_text: scraper::ElementRef| item_text.html());
+
+    //println!("{:#?}",links_list);
+
     // Write some data to the file
     root_rss = RSSRoot{
         version:String::from("2.0"),
@@ -495,78 +509,86 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
     links_list
         .zip(1..121)
         .for_each(|(item, number)|{
-            println!("{}.---------------------------------------------------------------------", number);
 
-            let href_path = get_href_path(&item);
-            let href_link = format!("{}{}",&configdata.config.website_url,&href_path);
+            if item.find("href=\"").is_some(){
 
-            let title =  get_title(&item);
-            let quality = get_quality(&title);
-            let cleaned_title =  get_clean_name(&title);
-            let cathegory = get_cathegory(&href_path);
-            let season = get_season(&title);
-            let episode: String ;
+                println!("{}.---------------------------------------------------------------------", number);
 
-            if season.len()>0{
-                episode = get_episode(&title);
-            } else {
-                episode = String::from("");
-            }
+                let href_path = get_href_path(&item);
+                let href_link = format!("{}{}",&configdata.config.website_url,&href_path);
 
-            println!("          href link:´{}´", &href_link);
-            println!("          cathegory:´{}´", &cathegory);
-            println!("              title:´{}´", &title);
-            println!("      cleaned title:´{}´", &cleaned_title);
-            println!("      torrent links:");
+                let title =  get_title(&item);
+                let quality = get_quality(&title);
+                let cleaned_title =  get_clean_name(&title);
+                let cathegory = get_cathegory(&href_path);
+                let season = get_season(&title);
+                let episode: String ;
 
-            let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
-                                                                                &configdata.config.link_text_download_torrent);
+                if season.len()>0{
+                    episode = get_episode(&title);
+                } else {
+                    episode = String::from("");
+                }
 
-            let mut torr_quality: String = String::from("");
-            let torrents_list = torrent_download_links.iter();
-            torrents_list
-                .for_each(|torr_item|{
-                    // if  episode.len()==0 || 
-                    //     (episode.len()>0 && get_episode(&torr_item).eq(&episode)) || 
-                    //     (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
-                    if  (episode.len()==0 && season.len()==0) ||
-                        (episode.len()>0 && season.len()>0 && get_season(&torr_item).len()==0 && get_episode(&torr_item).eq(&episode)) ||
-                        (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
-                        
-                            println!("                    .- ´{}´  ({}x{})",&torr_item,get_season(&torr_item),get_episode(&torr_item));
+                println!("          href link:´{}´", &href_link);
+                println!("          cathegory:´{}´", &cathegory);
+                println!("              title:´{}´", &title);
+                println!("      cleaned title:´{}´", &cleaned_title);
+                println!("      torrent links:");
 
-                        let mut item_rss: RSSItem = RSSItem{
-                            title: String::from(&cleaned_title),
-                            category: String::from(&cathegory),
-                            season: String::from(""),
-                            episode: String::from(""),
-                            link: String::from(&href_link),
-                            quality: String::from(&quality),
-                            pub_date: String::from(&now_date_time),
-                            enclosure_url: String::from(&torr_item.clone()),
-                            enclosure_length: 201269,
-                            enclosure_type:String::from("application/x-bittorrent"),
+                let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
+                                                                                        &configdata.config.link_id_download_torrent,     
+                                                                                    &configdata.config.link_text_download_torrent);
+
+                let mut torr_quality: String = String::from("");
+                let torrents_list = torrent_download_links.iter();
+                torrents_list
+                    .for_each(|torr_item|{
+                        // if  episode.len()==0 || 
+                        //     (episode.len()>0 && get_episode(&torr_item).eq(&episode)) || 
+                        //     (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
+                        if  (episode.len()==0 && season.len()==0) ||
+                            (episode.len()>0 && season.len()>0 && get_season(&torr_item).len()==0 && get_episode(&torr_item).eq(&episode)) ||
+                            (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
+                            
+                               println!("                   .- ´{}´  ({}x{})",&torr_item,get_season(&torr_item),get_episode(&torr_item));
+
+                            let mut item_rss: RSSItem = RSSItem{
+                                title: String::from(&cleaned_title),
+                                category: String::from(&cathegory),
+                                season: String::from(""),
+                                episode: String::from(""),
+                                link: String::from(&href_link),
+                                quality: String::from(&quality),
+                                pub_date: String::from(&now_date_time),
+                                enclosure_url: String::from(&torr_item.clone()),
+                                enclosure_length: 201269,
+                                enclosure_type:String::from("application/x-bittorrent"),
+                            };
+
+                            if season.len()>0 && episode.len()>0 {
+                                item_rss.title=format!("{} {}x{}",&cleaned_title,&season,&episode);
+                                item_rss.season = String::from(&season);
+                                item_rss.episode = String::from(&episode);
+                            };
+
+                            torr_quality = get_quality(&torr_item);
+                            if torr_quality.len()>0{
+                                item_rss.quality=String::from(&torr_quality);
+                            };
+
+                            if item_rss.enclosure_url.len()>0{   // adding only items with some download link
+                                channel_rss.items.push(item_rss);
+                            }
                         };
 
-                        if season.len()>0 && episode.len()>0 {
-                            item_rss.title=format!("{} {}x{}",&cleaned_title,&season,&episode);
-                            item_rss.season = String::from(&season);
-                            item_rss.episode = String::from(&episode);
-                        };
-
-                        torr_quality = get_quality(&torr_item);
-                        if torr_quality.len()>0{
-                            item_rss.quality=String::from(&torr_quality);
-                        };
-
-                        channel_rss.items.push(item_rss);
-                    };
-
-                });  
-            println!("            quality:´{}´", &torr_quality);
-            println!("             season:´{}´", &season);
-            println!("            episode:´{}´", &episode);    
+                    });  
+                println!("            quality:´{}´", &torr_quality);
+                println!("             season:´{}´", &season);
+                println!("            episode:´{}´", &episode);    
+            };
     });
+
 
     root_rss.channels.push(channel_rss);
     return root_rss;
