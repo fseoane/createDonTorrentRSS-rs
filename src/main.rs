@@ -39,7 +39,7 @@ struct RSSRoot {
             println!("\nWriting to: ´{}´",file_name);
             // Create a new file for writing
             let mut rss_file = std::fs::File::create(file_name).expect("rss file could not be created");
-            
+
             // Write rss root
             rss_file.write(format!("<rss version=\"{}\">\n",&self.version).as_bytes()).expect("rss file write failed");
 
@@ -55,7 +55,7 @@ struct RSSRoot {
                 for item in &channel.items{
                     rss_file.write(b"<item>\n").expect("rss file write failed");
                     rss_file.write(format!("<title>{}</title>\n",item.title).as_bytes()).expect("rss file write failed");
-                    rss_file.write(format!("<category>{}</category>\n",item.category).as_bytes()).expect("rss file write failed");                    
+                    rss_file.write(format!("<category>{}</category>\n",item.category).as_bytes()).expect("rss file write failed");
                     rss_file.write(format!("<season>{}</season>\n",item.season).as_bytes()).expect("rss file write failed");
                     rss_file.write(format!("<episode>{}</episode>\n",item.episode).as_bytes()).expect("rss file write failed");
                     rss_file.write(format!("<link>{}</link>\n",item.link).as_bytes()).expect("rss file write failed");
@@ -101,8 +101,8 @@ struct RSSItem {
 
 
 fn read_config(filename: &str) -> ConfigData{
-    // Read the contents of the file using a `match` block 
-    // to return the `data: Ok(c)` as a `String` 
+    // Read the contents of the file using a `match` block
+    // to return the `data: Ok(c)` as a `String`
     // or handle any `errors: Err(_)`.
     eprintln!("\nReading config file `{}`\n", filename);
 
@@ -125,7 +125,7 @@ fn read_config(filename: &str) -> ConfigData{
                                     .replace("]\"\n","]\n")
                                     .replace("\"\"","\"");
 
-    // Use a `match` block to return the 
+    // Use a `match` block to return the
     // file `contents` as a `Data struct: Ok(d)`
     // or handle any `errors: Err(_)`.
     let configdata: crate::ConfigData = match toml::from_str(&replaced) {
@@ -165,7 +165,7 @@ fn get_last_dontorrent_domain(telegram_url: &str) -> String {
     let links = document.select(&selector).map(|x| x.inner_html());
 
     let link =  match links.last(){
-        Some(l) => 
+        Some(l) =>
             match url::Url::parse(&l.as_str()){
                 Result::Ok(s) => String::from(s.as_str()),
                 Result::Err(_e ) => String::from(""),
@@ -185,8 +185,8 @@ fn get_substring_between(original_string: &String,start_crop_delimiter: &str, en
     // let end_crop_delimiter="\"";
     let start_crop_position: usize;
     let end_crop_position: usize;
-        
-    if original_string.find(start_crop_delimiter).is_some() {  
+
+    if original_string.find(start_crop_delimiter).is_some() {
         start_crop_position = original_string.find(start_crop_delimiter).unwrap() + start_crop_delimiter.len();
     } else{
         start_crop_position = 0;
@@ -194,7 +194,7 @@ fn get_substring_between(original_string: &String,start_crop_delimiter: &str, en
 
     let rest_of_original_string = String::from(&original_string.clone()[start_crop_position..]);
 
-    if rest_of_original_string.find(end_crop_delimiter).is_some() {  
+    if rest_of_original_string.find(end_crop_delimiter).is_some() {
         end_crop_position = rest_of_original_string.find(end_crop_delimiter).unwrap();
     }else{
         end_crop_position = 0;
@@ -213,8 +213,8 @@ fn get_href_path(html_a_element: &String) -> String {
     let end_delimiter="\"";
     let start_crop_position: usize;
     let end_crop_position: usize;
-        
-    if html_a_element.find(start_delimiter).is_some() {  
+
+    if html_a_element.find(start_delimiter).is_some() {
         start_crop_position = html_a_element.find(&start_delimiter).unwrap() + start_delimiter.len();
     } else{
         start_crop_position = 0;
@@ -222,7 +222,7 @@ fn get_href_path(html_a_element: &String) -> String {
 
     let rest_of_html_a_element = String::from(&html_a_element.clone()[start_crop_position..]);
 
-    if rest_of_html_a_element.find(end_delimiter).is_some() {  
+    if rest_of_html_a_element.find(end_delimiter).is_some() {
         end_crop_position = rest_of_html_a_element.find(&end_delimiter).unwrap();
     }else{
         end_crop_position = rest_of_html_a_element.len()+1;
@@ -241,20 +241,20 @@ fn get_title(html_a_element: &String) -> String {
     let end_delimiter="</a>";
     let start_crop_position: usize;
     let end_crop_position: usize;
-    
-    if html_a_element.find(start_delimiter).is_some() {  
+
+    if html_a_element.find(start_delimiter).is_some() {
         start_crop_position = html_a_element.find(&start_delimiter).unwrap() + start_delimiter.len();
-        
+
     } else{
         start_crop_position = 0;
     };
 
-    if html_a_element.find(end_delimiter).is_some() {  
+    if html_a_element.find(end_delimiter).is_some() {
         end_crop_position = html_a_element.find(&end_delimiter).unwrap();
     }else{
         end_crop_position = 0;
     };
-    
+
     if start_crop_position>=1 && end_crop_position>=1 && start_crop_position<end_crop_position{
         return String::from(&html_a_element[start_crop_position..end_crop_position]);
     }else{
@@ -280,7 +280,7 @@ fn get_cathegory(href_path: &String) -> String {
 
     let rest_of_cathegory = String::from(&cathegory.clone()[start_crop_position..]);
 
-    if rest_of_cathegory.find(end_delimiter).is_some() {  
+    if rest_of_cathegory.find(end_delimiter).is_some() {
         end_crop_position = rest_of_cathegory.find(&end_delimiter).unwrap();
     }else{
         end_crop_position = rest_of_cathegory.len()+1;
@@ -295,31 +295,43 @@ fn get_cathegory(href_path: &String) -> String {
 
 fn get_season(title: &String) -> String {
     let re = regex::Regex::new(r"(?ix)
-                                            (?:\s|s|season|temporada|temporada-)
+                                            (?:\s|s|season|temp-|temporada|temporada-)
                                             (\d+)([\S.]*)
                                             (?:e|x|episode|cap|cap-|\n)
-                                            (\d{2})             
+                                            (\d{1,2})
                                             ").unwrap();
     // let re = regex::Regex::new(r"(?ix)(?:\s|s|season|temporada-)
-    //                                         (\d+)          
+    //                                         (\d+)
     //                                         ").unwrap();
     if let Some(captures) = re.captures(&title.to_lowercase()) {
-        return String::from(captures.get(1).unwrap().as_str());
+        let season = String::from(captures.get(1).unwrap().as_str());
+        if season[0..1] == String::from("0") {
+            return String::from(&season.clone()[1..]);
+        } else {
+            return String::from(&season.clone());
+        }
+        //return String::from(captures.get(1).unwrap().as_str());
     } else {
         return String::from("");
     }
 }
 
 fn get_episode(title: &String) -> String {
-    let re = regex::Regex::new(r"(?ix)                 
-                            (?:                 
-                            e|x|cap|cap-|episode    
-                            )                    
-                            \s*                 
-                            (\d{2})             
+    let re = regex::Regex::new(r"(?ix)
+                            (?:
+                            e|x|cap|cap-|episode
+                            )
+                            \s*
+                            (\d{1,2})
                             ").unwrap();
     if let Some(captures) = re.captures(&title.to_lowercase()) {
-        return String::from(captures.get(1).unwrap().as_str());
+        let episode = String::from(captures.get(1).unwrap().as_str());
+        if episode[0..1] == String::from("0") {
+            return String::from(&episode.clone()[1..]);
+        } else {
+            return String::from(&episode.clone());
+        }
+        //return String::from(captures.get(1).unwrap().as_str());
     } else {
         return String::from("");
     }
@@ -335,29 +347,45 @@ fn get_pub_date(date_yyyy_mm_dd: &String) -> String {
 }
 
 fn get_quality(title: &String) -> String {
+    let mut quality: String = String::from("");
+
     if title.find("480p").is_some() {
-        return String::from("480p");
-    } else if title.find("720p").is_some(){
-        return String::from("720p");
-    } else if title.find("1080p").is_some(){
-        return String::from("1080p");
-    } else if title.find("HDTV").is_some(){
-        return String::from("1080p");
-    } else if title.find("1440p").is_some(){
-        return String::from("1440p");
-    } else if title.find("2K").is_some(){
-        return String::from("1080p");
-    } else if title.find("4K").is_some(){
-        return String::from("2160p");
-    } else if title.find("8K").is_some(){
-        return String::from("4320p");
-    } else {
-    return String::from("");
+        quality = String::from("480p");
     }
+
+    if title.find("720p").is_some(){
+        quality = String::from("720p");
+    }
+
+    if title.find("1080p").is_some(){
+        quality = String::from("1080p");
+    }
+
+    if title.find("HDTV").is_some(){
+        quality = String::from("1080p");
+    }
+
+    if title.find("1440p").is_some(){
+        quality =  String::from("1440p");
+    }
+
+    if title.find("2K").is_some(){
+        quality = String::from("1080p");
+    }
+
+    if title.find("4K").is_some(){
+        quality = String::from("2160p");
+    }
+
+    if title.find("8K").is_some(){
+        quality =  String::from("4320p");
+    }
+    return String::from(&quality.clone());
+
 }
 
 fn make_ascii_titlecase(s: &str) -> String {
-    
+
     let letra_inical = s.get(0..1).unwrap_or("");
     let resto_palabra = s.get(1..).unwrap_or("");
     return format!("{}{}",String::from(letra_inical.to_uppercase()),String::from(resto_palabra));
@@ -422,11 +450,11 @@ fn get_clean_name(title: &String) -> String {
 
     // Clean removable words
     for removable_word in words_to_remove{
-        if cleaned_title.find(&removable_word.to_lowercase()).is_some() {  
+        if cleaned_title.find(&removable_word.to_lowercase()).is_some() {
             cleaned_title = cleaned_title.replace(&removable_word.to_lowercase(), "");
         }
     };
-    
+
     // Clean empty brackets
     cleaned_title = cleaned_title.replace("[]", "");
 
@@ -434,8 +462,9 @@ fn get_clean_name(title: &String) -> String {
     cleaned_title = cleaned_title.replace("  ", " ").replace("  ", " ");
 
     return String::from(capitalize_each_word(&cleaned_title));
-    
+
 }
+
 
 fn scrape_download_page_and_get_torrent_link(href_link: &String,element_id: &String, search_for_string: &String) -> Vec<String> {
     let mut torrent_links: Vec<String> = Vec::new();//vec![String::from("")];
@@ -451,14 +480,14 @@ fn scrape_download_page_and_get_torrent_link(href_link: &String,element_id: &Str
         .select(&torrents_page_selector)
         .filter(|item| item.inner_html() == String::from(search_for_string))
         .map(|item_text: scraper::ElementRef| item_text.html());
-            
+
     torrents_links_list
         .zip(1..100)
         .for_each(|(item, _number)|{
             let href_path = get_href_path(&item).replace("//", "https://");
             torrent_links.push(String::from(&href_path));
         });
-        
+
     return torrent_links;
 }
 
@@ -472,7 +501,7 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
     let last_torrents_url = format!("{}/{}",configdata.config.website_url,configdata.config.website_path)
         .replace("//", "/")
         .replace(":/", "://");
-    
+
     println!("\nScraping last torrents from:'{}'", last_torrents_url);
 
     let links_page = reqwest::blocking::get(last_torrents_url.as_str())
@@ -481,7 +510,7 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
         .unwrap_or(String::from(" "));
 
     let document = scraper::Html::parse_document(&links_page);
-   
+
     //let div_id_ultimos = format!("{}","div.seccion > * > * > * > a.text-primary");
     let div_id_ultimos = format!("{}",configdata.config.div_id_ultimos);
     let links_page_selector = scraper::Selector::parse(div_id_ultimos.as_str()).unwrap();
@@ -497,7 +526,7 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
         version:String::from("2.0"),
         channels:Vec::new(),
     };
-    
+
     channel_rss = RSSChannel{
         title:String::from("DonTorrent RSS"),
         link:String::from("https://20.12.69.250"),
@@ -519,16 +548,16 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
 
                 let title =  get_title(&item);
                 let quality = get_quality(&title);
-                let cleaned_title =  get_clean_name(&title);
                 let cathegory = get_cathegory(&href_path);
                 let season = get_season(&title);
                 let episode: String ;
-
                 if season.len()>0{
                     episode = get_episode(&title);
                 } else {
                     episode = String::from("");
                 }
+                let cleaned_title =  get_clean_name(&title);
+
 
                 println!("          href link:´{}´", &href_link);
                 println!("          cathegory:´{}´", &cathegory);
@@ -537,21 +566,20 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
                 println!("      torrent links:");
 
                 let torrent_download_links: Vec<String> = scrape_download_page_and_get_torrent_link( &href_link,
-                                                                                        &configdata.config.link_id_download_torrent,     
+                                                                                        &configdata.config.link_id_download_torrent,
                                                                                     &configdata.config.link_text_download_torrent);
 
                 let mut torr_quality: String = String::from("");
                 let torrents_list = torrent_download_links.iter();
                 torrents_list
                     .for_each(|torr_item|{
-                        // if  episode.len()==0 || 
-                        //     (episode.len()>0 && get_episode(&torr_item).eq(&episode)) || 
-                        //     (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
+                        println!("                  (found).- ´{}´  ({}x{})",&torr_item,get_season(&torr_item),get_episode(&torr_item));
+
                         if  (episode.len()==0 && season.len()==0) ||
                             (episode.len()>0 && season.len()>0 && get_season(&torr_item).len()==0 && get_episode(&torr_item).eq(&episode)) ||
                             (episode.len()>0 && season.len()>0 && get_season(&torr_item).eq(&season) && get_episode(&torr_item).eq(&episode)){
-                            
-                               println!("                   .- ´{}´  ({}x{})",&torr_item,get_season(&torr_item),get_episode(&torr_item));
+
+                            println!("               >selected>.- ´{}´  ({}x{})",&torr_item,get_season(&torr_item),get_episode(&torr_item));
 
                             let mut item_rss: RSSItem = RSSItem{
                                 title: String::from(&cleaned_title),
@@ -572,20 +600,21 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
                                 item_rss.episode = String::from(&episode);
                             };
 
-                            torr_quality = get_quality(&torr_item);
-                            if torr_quality.len()>0{
-                                item_rss.quality=String::from(&torr_quality);
-                            };
+
+                            // torr_quality = get_quality(&torr_item);
+                            // if torr_quality.len()>0{
+                            //     item_rss.quality=String::from(&torr_quality);
+                            // };
 
                             if item_rss.enclosure_url.len()>0{   // adding only items with some download link
                                 channel_rss.items.push(item_rss);
                             }
                         };
 
-                    });  
-                println!("            quality:´{}´", &torr_quality);
+                    });
+                println!("            quality:´{}´", &quality);
                 println!("             season:´{}´", &season);
-                println!("            episode:´{}´", &episode);    
+                println!("            episode:´{}´", &episode);
             };
     });
 
@@ -598,7 +627,7 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
 fn main() {
     // IMPORTANT:
     // ==========
-    // To be able to compile in Alpine Linux in arm64, 
+    // To be able to compile in Alpine Linux in arm64,
     // 1.) install these packages in the Alpine:
     //         sudo apk add pkgconfig
     //         sudo apk add gcc musl-dev openssl openssl-dev
@@ -606,9 +635,9 @@ fn main() {
     //         git2 = {version="0.13.22", features = ["vendored-libgit2"]}
     // 3.) and compile passing the -Ctarget-features=-crt-static argument like:
     //         RUSTFLAGS="-Ctarget-feature=-crt-static" cargo build
-    // because rust only links to static libraries when building a static binary, 
+    // because rust only links to static libraries when building a static binary,
     // which is the default for the musl target
-    // but to build a dynamic binary which can link to dynamic libraries, 
+    // but to build a dynamic binary which can link to dynamic libraries,
     // you need to use RUSTFLAGS="-Ctarget-feature=-crt-static".
 
     let args: Vec<String> = env::args().collect();
@@ -617,7 +646,7 @@ fn main() {
     let mut parameter: &str  = "";
     let config_option: &str = "-c";
     let filename: &str;
-    
+
     if args.len()>1{
         option = &args[1];
     };
@@ -632,23 +661,23 @@ fn main() {
     let configdata: ConfigData = read_config(filename);
 
     let previous_domain = configdata.config.website_url.clone();
- 
+
     let now_date_time: String = Local::now().to_rfc3339().replace("T"," ");
     println!("\nRun time     : {}",now_date_time);
 
     // Print out the values to `stdout`.
-    println!("\nConfiguration:"); 
-    println!("------------------------------------------------------------------------"); 
-    println!("telegram_url:               {}", &configdata.config.telegram_url); 
-    println!("website_url:                {}", &configdata.config.website_url); 
+    println!("\nConfiguration:");
+    println!("------------------------------------------------------------------------");
+    println!("telegram_url:               {}", &configdata.config.telegram_url);
+    println!("website_url:                {}", &configdata.config.website_url);
     println!("website_path:               {}", &configdata.config.website_path);
     println!("div_id_ultimos:             {}", &configdata.config.div_id_ultimos);
-    println!("link_id_download_torrent:   {}", &configdata.config.link_id_download_torrent);    
+    println!("link_id_download_torrent:   {}", &configdata.config.link_id_download_torrent);
     println!("link_text_download_torrent: {}", &configdata.config.link_text_download_torrent);
     println!("output_file:                {}", &configdata.config.output_file);
 
     let last_domain = get_last_dontorrent_domain(&configdata.config.telegram_url);
-    
+
     println!("\nPrevious domain:'{}'", previous_domain);
     println!("Last domain:'{}'", last_domain);
 
