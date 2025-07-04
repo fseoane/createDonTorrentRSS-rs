@@ -569,7 +569,7 @@ fn get_latest_torrents (configdata: &ConfigData) -> RSSRoot {
                                                                                         &configdata.config.link_id_download_torrent,
                                                                                     &configdata.config.link_text_download_torrent);
 
-                let mut torr_quality: String = String::from("");
+                let torr_quality: String = String::from("");
                 let torrents_list = torrent_download_links.iter();
                 torrents_list
                     .for_each(|torr_item|{
@@ -681,7 +681,7 @@ fn main() {
     println!("\nPrevious domain:'{}'", previous_domain);
     println!("Last domain:'{}'", last_domain);
 
-    let mut newconfigdata: ConfigData;
+    let newconfigdata: ConfigData;
 
     if previous_domain.ne(&last_domain){
         let newsettings: Settings = Settings{
